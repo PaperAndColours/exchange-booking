@@ -7,10 +7,10 @@ var BookingSchema = new Schema({
 	end: Date,
 	allDay: Boolean,
 	client: String,
-	_resources: { 
-		type: Schema.Types.ObjectId, 
+	_resources: [{ 
+		type: Schema.Types.ObjectId,
 		ref: 'Room'
-	}
+	}]
 });
 
 
@@ -18,7 +18,7 @@ BookingSchema.virtual('resources').get(function() {
 	var resourceString = "";
 	for (var i=0; i<this._resources.length; i++) {
 		if (i>0) resourceString += " ";
-		resourceString += this._resources[i].id;
+		resourceString += this._resources[i]._id;
 	}
 	return resourceString;
 });

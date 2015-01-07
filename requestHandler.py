@@ -57,7 +57,7 @@ def createBookingGUI():
 	start = makeTimestamp(int(raw_input("Start (hours ago): ")))
 	end = makeTimestamp(int(raw_input("End (hours ago): ")))
 	room = selectRoomGUI();
-	return bookingCreate(title, start, end, room, "false", "bob")
+	return bookingCreate(title, start, end, [room], "false", "bob")
 
 def printBookingsGUI():
 	print bookingListAll().content
