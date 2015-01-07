@@ -1,0 +1,30 @@
+Find a new tool to make HTML requests more easily. In python
+Find the way to execute mongo commands from command line (or python) - to auto-populate
+
+change Javascript libraries to bower - or sync bower with correct dir
+
+Make validation for bookings, events
+
+make the following fully CRUD supported:
+	booking
+	room
+
+Create user authentication
+
+Create views layouts for:
+	Client
+	Admin
+	Overview / Review
+
+Create special logic for:
+	Client
+	Admin
+	Overview / Review
+
+
+Tweak calendar theme
+	-Individual colours for seperate resources
+
+Change calendar to use ajax queries
+
+Make sure using custom id property for mongo models doesn't break them

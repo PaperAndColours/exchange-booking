@@ -1,0 +1,21 @@
+{
+  "name": "meanWebDevPdf",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~4.8.8",
+    "method-override": "~2.2.0",
+    "compression": "~1.0.11",
+    "morgan": "~1.3.0",
+    "body-parser": "~1.8.0",
+    "ejs": "~1.0.0",
+    "express-session": "~1.9.3",
+    "mongoose": "~3.8.15"
+  }
+}
