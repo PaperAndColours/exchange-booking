@@ -1,18 +1,6 @@
-#Disable multi-room bookings. - Make it so each room requires a seperate box
-(Seems to work)
-	Where are the references?:
-		-Model:
-			-The model itself (x)
-			-The resource virtual function? Yes - this might have a reference to an array instead of a single object (x)
-		-The python script - make sure supplying a individual item to bookingCreate(), and perhaps other functions
-		-Saving: 
-			The controller? no, this just forwards
-			The resource-view js? no, this just loads from virtual resources
-
-
-Make sure a single resource is required, after multi-room bookings have been disabled
 
 Create user authentication
+
 Create views layouts for:
 	Client
 	Admin
@@ -28,6 +16,7 @@ change Javascript libraries to bower - or sync bower with correct dir
 Find the way to execute mongo commands from command line (or python) - to auto-populate
 Make the python tool more generic
 
+Change calendar to use ajax queries
 Tweak calendar theme
 	-Individual colours for seperate resources
 	-Easy navigation
@@ -35,10 +24,6 @@ Tweak calendar theme
 Create popup box to change information when event clicked
 
 Model page on google calendar page
-
-Change calendar to use ajax queries
-
-Make sure using custom id property for mongo models doesn't break them
 
 
 --
