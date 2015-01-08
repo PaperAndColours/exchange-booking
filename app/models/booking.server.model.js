@@ -7,21 +7,16 @@ var BookingSchema = new Schema({
 	end: {type: Date, required: true},
 	allDay: {type: Boolean, required: true},
 	client: {type: String, required: true},
-	_resources: [{ 
+	_resources: { 
 		type: Schema.Types.ObjectId,
 		ref: 'Room',
 		required: true
-	}]
+	}
 });
 
 
 BookingSchema.virtual('resources').get(function() {
-	var resourceString = "";
-	for (var i=0; i<this._resources.length; i++) {
-		if (i>0) resourceString += " ";
-		resourceString += this._resources[i]._id;
-	}
-	return resourceString;
+	return this._resources._id;
 });
 
 BookingSchema.set('toJSON', { virtuals: true});

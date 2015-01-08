@@ -28,10 +28,11 @@ def bookingCreate(title, start, end, resources, allDay="false", client=""):
 	return requests.post(urlBookings, json.dumps(payload), headers=contentJSON)
 
 def bookingListAll():
-	return requests.get(urlBookings+"/getEvents")
+	return requests.get(urlBookings)
 
 
 #-------GUI----------
+#--Room gui-----
 def createRoomGUI():
 	roomName = raw_input("Room Name: ")
 	roomCreate(roomName)
@@ -49,9 +50,16 @@ def selectRoomGUI():
 	selection = int(raw_input())
 	return allRooms[selection]["_id"]
 
+def updateRoomGUI():
+	pass
+
+def deleteRoomGUI():
+	pass
+
 def printRoomGUI():
 	print roomListAll().content
 
+#--Booking gui-----
 def createBookingGUI():
 	title = raw_input("Title: ")
 	start = makeTimestamp(int(raw_input("Start (hours ago): ")))
@@ -62,6 +70,13 @@ def createBookingGUI():
 def printBookingsGUI():
 	print bookingListAll().content
 
+def updateBookingGUI():
+	pass
+
+def deleteBookingGUI():
+	pass
+
+#--main gui
 def GUI():
 	print("1. Rooms")
 	print("2. Bookings")
@@ -74,27 +89,30 @@ def GUI():
 def roomGUI():
 	print("1. List Rooms")
 	print("2. Create Room")
-	print("2. Update Room")
-	print("2. Delete Room")
-	print("3. Back")
+	print("3. Update Room")
+	print("4. Delete Room")
+	print("5. Back")
 	selection = int(raw_input(">"))-1
-	if (selection <2):
-		[printRoomsGUI, createRoomGUI][selection]()
+	if (selection <4):
+		[printRoomsGUI, createRoomGUI, updateRoomGUI, deleteRoomGUI][selection]()
 	return selection
 
 def bookingGUI():
 	print("1. List Bookings")
 	print("2. Create Booking")
-	print("3. Back")
+	print("3. Update Booking")
+	print("4. Delete Booking")
+	print("5. Back")
 	selection = int(raw_input(">"))-1
-	if (selection <2):
-		[printBookingsGUI, createBookingGUI][selection]()
+	if (selection <4):
+		[printBookingsGUI, createBookingGUI, updateBookingGUI, deleteBookingGUI][selection]()
 	return selection
 
-#while (GUI() != 2): pass
+while (GUI() != 2): pass
 
 #--------------Individual tests----
 
 
-payload = {"title": "Scooby", "start": makeTimestamp(10), "end": makeTimestamp(1), "allDay": "false", "_resources": "54ae9486592438460370bef4", "client": "doggy bog"}
+#payload = {"title": "Scooby", "start": makeTimestamp(10), "end": makeTimestamp(1), "allDay": "false", "_resources": "54ae9486592438460370bef4", "client": "doggy bog"}
+#payload = {"title": "Scooby", "start": makeTimestamp(10), "end": makeTimestamp(1), "allDay": "false",  "client": "doggy bog"}
 print requests.post(urlBookings, json.dumps(payload), headers=contentJSON).content

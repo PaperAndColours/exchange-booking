@@ -25,14 +25,14 @@
         defaultView: 'resourceDay',
         editable: true,
         droppable: true,
-        resources: 'rooms',
+        resources: 'calendar/rooms',
         resourceFilter: function (resource) {
           var active = $("input").map(function(){
             return this.checked ? this.name : null;
           }).get();
           return $.inArray(resource.id, active) > -1;
         },
-        events: 'booking',
+        events: 'calendar/booking',
         // the 'ev' parameter is the mouse event rather than the resource 'event'
         // the ev.data is the resource column clicked upon
         selectable: true,
