@@ -2,14 +2,15 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var BookingSchema = new Schema({
-	title: String,
-	start: Date,
-	end: Date,
-	allDay: Boolean,
-	client: String,
+	title: {type: String, required: true},
+	start: {type: Date, required: true},
+	end: {type: Date, required: true},
+	allDay: {type: Boolean, required: true},
+	client: {type: String, required: true},
 	_resources: [{ 
 		type: Schema.Types.ObjectId,
-		ref: 'Room'
+		ref: 'Room',
+		required: true
 	}]
 });
 
