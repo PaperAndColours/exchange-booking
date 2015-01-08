@@ -5,7 +5,7 @@ import datetime
 import calendar
 
 urlHost = "http://localhost:5000/calendar"
-urlBookings = urlHost
+urlBookings = urlHost+"/booking"
 urlRooms = urlHost+"/rooms"
 
 contentJSON = {"content-type" : "application/json"}
@@ -91,20 +91,10 @@ def bookingGUI():
 		[printBookingsGUI, createBookingGUI][selection]()
 	return selection
 
-while (GUI() != 2): pass
+#while (GUI() != 2): pass
 
-#print createBookingGUI().content
-#print roomListAll().content
-
-#print bookingCreate("All day booking", makeTimestamp(3), makeTimestamp(1),  "osjdfisdjf", allDay="true", client="Rob Spangles").content
-
-#print bookingCreate("Time specific booking", makeTimestamp(3), makeTimestamp(1),  "54ac2c9c9ed769e7198f7bd8", client="Bob Jangles").content
-#roomCreate("resource4", "Crimson Room")
-	
+#--------------Individual tests----
 
 
-#curl -X POST -H "Content-Type: application/json" -d '{"id" : "resource1", "name" : "Blue Room"}' localhost:5000/calendar/rooms
-#curl -X POST -H "Content-Type: application/json" -d '{"id" : "resource2", "name" : "Red Room"}' localhost:5000/calendar/rooms
-#curl -X POST -H "Content-Type: application/json" -d '{"id" : "resource3", "name" : "Green Room"}' localhost:5000/calendar/rooms
-
-#curl -X POST -H "Content-Type: application/json" -d '{"title" : "Hello", "start" : "1420211635820", "end" : "1420211638820", "allDay" : "true", "_resources" : "54ac2c9c9ed769e7198f7bd8", "client" : "" }' localhost:5000/calendar 
+payload = {"title": "Scooby", "start": makeTimestamp(10), "end": makeTimestamp(1), "allDay": "false", "_resources": "54ae9486592438460370bef4", "client": "doggy bog"}
+print requests.post(urlBookings, json.dumps(payload), headers=contentJSON).content
