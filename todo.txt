@@ -1,9 +1,4 @@
-Find a new tool to make HTML requests more easily. In python
-Find the way to execute mongo commands from command line (or python) - to auto-populate
-
-change Javascript libraries to bower - or sync bower with correct dir
-
-Make validation for bookings, events
+#Make validation for bookings, events
 	Make most fields required!
 
 Disable multi-room bookings. - Make it so each room requires a seperate box
@@ -19,6 +14,10 @@ Create back end logic for:
 	Admin
 	Overview / Review
 
+change Javascript libraries to bower - or sync bower with correct dir
+
+Find the way to execute mongo commands from command line (or python) - to auto-populate
+Make the python tool more generic
 
 Tweak calendar theme
 	-Individual colours for seperate resources
