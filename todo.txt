@@ -4,11 +4,9 @@ Find the way to execute mongo commands from command line (or python) - to auto-p
 change Javascript libraries to bower - or sync bower with correct dir
 
 Make validation for bookings, events
+	Make most fields required!
 
-make the following fully CRUD supported:
-	booking
-	room
-
+Disable multi-room bookings. - Make it so each room requires a seperate box
 Create user authentication
 
 Create views layouts for:
@@ -16,7 +14,7 @@ Create views layouts for:
 	Admin
 	Overview / Review
 
-Create special logic for:
+Create back end logic for:
 	Client
 	Admin
 	Overview / Review
@@ -24,7 +22,17 @@ Create special logic for:
 
 Tweak calendar theme
 	-Individual colours for seperate resources
+	-Easy navigation
+
+Create popup box to change information when event clicked
+
+Model page on google calendar page
 
 Change calendar to use ajax queries
 
 Make sure using custom id property for mongo models doesn't break them
+
+
+--
+backup
+sync with quickbooks

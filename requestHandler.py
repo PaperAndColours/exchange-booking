@@ -74,6 +74,8 @@ def GUI():
 def roomGUI():
 	print("1. List Rooms")
 	print("2. Create Room")
+	print("2. Update Room")
+	print("2. Delete Room")
 	print("3. Back")
 	selection = int(raw_input(">"))-1
 	if (selection <2):

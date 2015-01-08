@@ -32,7 +32,7 @@
           }).get();
           return $.inArray(resource.id, active) > -1;
         },
-        events: 'getEvents',
+        events: 'booking',
         // the 'ev' parameter is the mouse event rather than the resource 'event'
         // the ev.data is the resource column clicked upon
         selectable: true,
@@ -70,7 +70,7 @@
 <body>
 <form>Select the resources you wanna filter:
   <% for(var i=0; i<resources.length; i++) {%>
-  <input name="<%=resources[i].id%>" type="checkbox" checked /> <%= resources[i].name %>1
+  <input name="<%=resources[i].id%>" type="checkbox" checked /> <%= resources[i].name %>
   <% } %>
 </form>
 <div id='calendar'></div>

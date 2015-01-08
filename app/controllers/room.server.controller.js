@@ -7,7 +7,6 @@ exports.render = function(req,res, next) {
 		}
 		else {
 			res.render('resource-views', {
-				title: "Hello world 2",
 				resources: Rooms
 			});
 		}
@@ -41,7 +40,7 @@ exports.read = function(req, res) {
 	res.json(req.Room);
 }
 
-exports.RoomByID = function(req, res, next, id) {
+exports.roomByID = function(req, res, next, id) {
 	Room.findOne({
 		_id: id
 	}, function(err, Room) {
