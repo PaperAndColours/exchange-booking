@@ -2,9 +2,9 @@
 -Frontend/backend sync-
 Change calendar to use ajax queries
 	--Creating Events
-	--Dragging events  ( )
-	--Resizing events  ( )
 	--Deleting Events
+
+Make updates work with dragging/dropping between resources
 
 Create popup box to change information when event clicked
 

@@ -12,7 +12,8 @@
   <script>
 	
 	function sendUpdate(event) {
-			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "resources" : event.resources}
+			console.log(event)
+			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources}
 			console.log(payload)
 			$.ajax({
 			url: 'calendar/booking/'+event.id,

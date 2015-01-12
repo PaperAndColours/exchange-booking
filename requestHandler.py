@@ -108,12 +108,12 @@ def bookingGUI():
 		[printBookingsGUI, createBookingGUI, updateBookingGUI, deleteBookingGUI][selection]()
 	return selection
 
-#while (GUI() != 2): pass
+while (GUI() != 2): pass
 
 #--------------Individual tests----
 
 
-roomId = selectRoomGUI()
-payload = {"title": "Scooby", "start": makeTimestamp(10), "end": makeTimestamp(1), "allDay": "false", "_resources": roomId, "client": "doggy bog"}
+#roomId = selectRoomGUI()
+#payload = {"title": "Scooby", "start": makeTimestamp(10), "end": makeTimestamp(1), "allDay": "false", "_resources": roomId, "client": "doggy bog"}
 #payload = {"title": "Scooby", "start": makeTimestamp(10), "end": makeTimestamp(1), "allDay": "false",  "client": "doggy bog"}
 print requests.post(urlBookings, json.dumps(payload), headers=contentJSON).content

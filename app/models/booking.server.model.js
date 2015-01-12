@@ -19,9 +19,6 @@ BookingSchema.virtual('resources').get(function() {
 	return this._resources._id;
 });
 
-BookingSchema.virtual('resources').set(function(resourceIn) {
-	this._resources = resourceIn;
-});
 
 BookingSchema.set('toJSON', { virtuals: true});
 mongoose.model('Booking', BookingSchema);

@@ -1,0 +1,12 @@
+The whole using _resources & resources params in booking model seems slightly clunky:
+
+Ajax sendUpdate does _resources = resources
+
+Setter in models/booking.models
+2 fields in model in models/booking.model
+
+It might be better to put this logic in the controller?
+
+
+---------------------------
+

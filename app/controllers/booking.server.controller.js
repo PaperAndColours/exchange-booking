@@ -42,6 +42,7 @@ exports.bookingByID = function(req, res, next, id) {
 
 
 exports.update= function(req, res, next) {
+	console.log("booking data->");
 	console.log(req.body);
 	Booking.findByIdAndUpdate(req.booking.id, req.body, function(err, booking) {
 		if (err){
