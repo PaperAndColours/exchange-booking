@@ -10,6 +10,23 @@
   <script src='/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.js'></script>
   <script src='/js/fullCalendarResources/dist/fullcalendar.js'></script>
   <script>
+	function sendCreate(event) {
+			console.log(event);
+			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources}
+			console.log(payload);
+			$.ajax({
+			url: 'calendar/booking/',
+			type: 'POST',
+			data: JSON.stringify(payload),
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'json',
+			async: false,
+			success: function(msg) {
+				$('#calendar').fullCalendar('refetchEvents');
+				$('#calendar').fullCalendar('unselect');
+				}
+			});
+	}
 	
 	function sendUpdate(event) {
 			console.log(event)
@@ -55,17 +72,26 @@
         // the ev.data is the resource column clicked upon
         selectable: true,
         selectHelper: true,
-        select: function (start, end, ev) {
-		  console.log("start event:");
-          console.log(start);
-		  console.log("end event:");
-          console.log(end);
-		  console.log("event resources");
-          console.log(ev); // resources
-        },
+		select: function(start, end, ev) { //start, end, resources
+				console.log(ev);
+				var title = prompt('Event Title:');
+				var eventData;
+				var allDay = !start.hasTime();
+				if (title) {
+					eventData = {
+						title: title,
+						start: start,
+						allDay: allDay,
+						end: end,
+						resources: ev.data.id,
+						client: "bob"
+					};
+				sendCreate(eventData);
+				};
+			},
         eventClick: function (event) {
 		  //console.log("event clicked");
-          //console.log(event);
+          console.log(event);
   		  event.title = "CLICKED!";
         },
         eventDrop: function (event, delta, revertFunc) {
