@@ -1,3 +1,22 @@
+#---Front end-----------------
+-Frontend/backend sync-
+Change calendar to use ajax queries
+	--Creating Events
+	--Dragging events  ( )
+	--Resizing events  ( )
+	--Deleting Events
+
+Create popup box to change information when event clicked
+
+Tweak calendar theme
+	-Individual colours for seperate resources
+
+-Navigability-
+Make calendar more intuitive to navigate for the purpose
+	-Easy navigation
+
+Model page on google calendar page
+
 
 Create user authentication
 
@@ -16,14 +35,6 @@ change Javascript libraries to bower - or sync bower with correct dir
 Find the way to execute mongo commands from command line (or python) - to auto-populate
 Make the python tool more generic
 
-Change calendar to use ajax queries
-Tweak calendar theme
-	-Individual colours for seperate resources
-	-Easy navigation
-
-Create popup box to change information when event clicked
-
-Model page on google calendar page
 
 
 --

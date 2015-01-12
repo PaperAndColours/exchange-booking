@@ -10,6 +10,22 @@
   <script src='/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.js'></script>
   <script src='/js/fullCalendarResources/dist/fullcalendar.js'></script>
   <script>
+	
+	function sendUpdate(event) {
+			payload = {"title": event.title}
+			$.ajax({
+			url: 'calendar/booking/'+payload.id,
+			type: 'PUT',
+			data: JSON.stringify(payload),
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'json',
+			async: false,
+			success: function(msg) {
+				alert(msg);
+				}
+			});
+	}
+
     $(document).ready(function () {
       var date = new Date();
       var d = date.getDate();
@@ -55,6 +71,9 @@
           console.log(event);
         },
 	    eventResize: function (event, delta, revertFunc) {
+		  console.log("event resized");
+		  console.log(event);
+		  sendUpdate(event);
 		}
       });
     });
