@@ -12,9 +12,10 @@
   <script>
 	
 	function sendUpdate(event) {
-			payload = {"title": event.title}
+			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "resources" : event.resources}
+			console.log(payload)
 			$.ajax({
-			url: 'calendar/booking/'+payload.id,
+			url: 'calendar/booking/'+event.id,
 			type: 'PUT',
 			data: JSON.stringify(payload),
 			contentType: 'application/json; charset=utf-8',
@@ -62,17 +63,18 @@
           console.log(ev); // resources
         },
         eventClick: function (event) {
-		  console.log("event clicked");
-          console.log(event);
+		  //console.log("event clicked");
+          //console.log(event);
   		  event.title = "CLICKED!";
         },
         eventDrop: function (event, delta, revertFunc) {
-		  console.log("event dropped");
-          console.log(event);
+		  //console.log("event dropped");
+          //console.log(event);
+		  sendUpdate(event);
         },
 	    eventResize: function (event, delta, revertFunc) {
-		  console.log("event resized");
-		  console.log(event);
+		  //console.log("event resized");
+		  //console.log(event);
 		  sendUpdate(event);
 		}
       });
