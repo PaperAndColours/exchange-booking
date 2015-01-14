@@ -1,6 +1,4 @@
 #---Front end-----------------
-Factor out js into seperate / single files
-
 Link popup box to creation of events
 	-Popup box appears when event created, instead of simple dialog
 	-Upon popup box submit, the information is submitted to the server
