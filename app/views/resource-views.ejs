@@ -3,124 +3,19 @@
 <head>
   <meta charset='utf-8'/>
   <link href='/css/style.css' rel='stylesheet'/>
+  <link href='/css/style2.css' rel='stylesheet'/>
   <link href='/js/fullCalendarResources/dist/fullcalendar.css' rel='stylesheet'/>
   <link href='/js/fullCalendarResources/dist/fullcalendar.print.css' rel='stylesheet' media='print'/>
   <link rel="stylesheet" href="/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.theme.css">
   <link rel="stylesheet" href="/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.css">
-  <link rel="stylesheet" href="/js/jdialog/style.css">
 
   <script src='/js/fullCalendarResources/lib/moment/moment.js'></script>
   <script src='/js/fullCalendarResources/lib/jquery/dist/jquery.js'></script>
-  <script src="/js/jdialog/script.js"></script>
   <script src="/js/globalize/globalize.js"></script>
 
   <script src='/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.js'></script>
   <script src='/js/fullCalendarResources/dist/fullcalendar.js'></script>
-  <script>
-	function sendCreate(event) {
-			console.log(event);
-			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources}
-			console.log(payload);
-			$.ajax({
-			url: 'booking/',
-			type: 'POST',
-			data: JSON.stringify(payload),
-			contentType: 'application/json; charset=utf-8',
-			dataType: 'json',
-			async: false,
-			success: function(msg) {
-				$('#calendar').fullCalendar('refetchEvents');
-				$('#calendar').fullCalendar('unselect');
-				}
-			});
-	}
-	
-	function sendUpdate(event) {
-			console.log(event)
-			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources}
-			console.log(payload)
-			$.ajax({
-			url: 'booking/'+event.id,
-			type: 'PUT',
-			data: JSON.stringify(payload),
-			contentType: 'application/json; charset=utf-8',
-			dataType: 'json',
-			async: false,
-			success: function(msg) {
-				alert(msg);
-				}
-			});
-	}
-
-    $(document).ready(function () {
-      var date = new Date();
-      var d = date.getDate();
-      var m = date.getMonth();
-      var y = date.getFullYear();
-
-      $('#calendar').fullCalendar({
-        header: {
-          left: 'prev,next today',
-          center: 'title',
-          right: 'month,agendaWeek,resourceDay'
-        },
-        defaultView: 'resourceDay',
-        editable: true,
-        droppable: true,
-        resources: 'rooms',
-        resourceFilter: function (resource) {
-          var active = $("input").map(function(){
-            return this.checked ? this.name : null;
-          }).get();
-          return $.inArray(resource.id, active) > -1;
-        },
-        events: 'booking',
-        // the 'ev' parameter is the mouse event rather than the resource 'event'
-        // the ev.data is the resource column clicked upon
-        selectable: true,
-        selectHelper: true,
-		select: function(start, end, ev) { //start, end, resources
-				console.log(ev);
-				var title = prompt('Event Title:');
-				var eventData;
-				var allDay = !start.hasTime();
-				if (title) {
-					eventData = {
-						title: title,
-						start: start,
-						allDay: allDay,
-						end: end,
-						resources: ev.data.id,
-						client: "bob"
-					};
-				sendCreate(eventData);
-				};
-			},
-        eventClick: function (event) {
-		  //console.log("event clicked");
-          console.log(event);
-  		  event.title = "CLICKED!";
-        },
-        eventDrop: function (event, delta, revertFunc) {
-		  //console.log("event dropped");
-          //console.log(event);
-		  sendUpdate(event);
-        },
-	    eventResize: function (event, delta, revertFunc) {
-		  //console.log("event resized");
-		  //console.log(event);
-		  sendUpdate(event);
-		}
-      });
-    });
-
-    $(document).ready(function() {
-      $('input:checkbox').change(function(){
-        $('#calendar').fullCalendar('render');
-      });
-    });
-
-  </script>
+  <script src="/js/main.js"></script>
 </head>
 <body>
     <button id="create-booking">Create new booking</button>
@@ -130,7 +25,6 @@
   <% } %>
 </form>
 <div id='calendar'></div>
-
 
     <div id="dialog-form" title="Create new user">
         <p class="validateTips">All form fields are required.</p>
