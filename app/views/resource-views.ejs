@@ -5,8 +5,15 @@
   <link href='/css/style.css' rel='stylesheet'/>
   <link href='/js/fullCalendarResources/dist/fullcalendar.css' rel='stylesheet'/>
   <link href='/js/fullCalendarResources/dist/fullcalendar.print.css' rel='stylesheet' media='print'/>
+  <link rel="stylesheet" href="/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.theme.css">
+  <link rel="stylesheet" href="/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.css">
+  <link rel="stylesheet" href="/js/jdialog/style.css">
+
   <script src='/js/fullCalendarResources/lib/moment/moment.js'></script>
   <script src='/js/fullCalendarResources/lib/jquery/dist/jquery.js'></script>
+  <script src="/js/jdialog/script.js"></script>
+  <script src="/js/globalize/globalize.js"></script>
+
   <script src='/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.js'></script>
   <script src='/js/fullCalendarResources/dist/fullcalendar.js'></script>
   <script>
@@ -116,12 +123,37 @@
   </script>
 </head>
 <body>
+    <button id="create-booking">Create new booking</button>
 <form>Select the resources you wanna filter:
   <% for(var i=0; i<resources.length; i++) {%>
   <input name="<%=resources[i].id%>" type="checkbox" checked /> <%= resources[i].name %>
   <% } %>
 </form>
 <div id='calendar'></div>
+
+
+    <div id="dialog-form" title="Create new user">
+        <p class="validateTips">All form fields are required.</p>
+        <form>
+            <fieldset>
+                <label for="client">Client</label>
+                <input type="text" name="client" id="client" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+				<label for="startdate">Start Date</label>
+				<input type="text" id="startdate" class="ui-widget-content ui-corner-all">
+				<label for="starttime">Start Time</label>
+				<input id="starttime" value="01:00 PM" class="ui-widget-content ui-corner-all">
+
+				<label for="enddate">End Date</label>
+				<input type="text" id="enddate" class="ui-widget-content ui-corner-all">
+
+				<label for="endtime">End Time</label>
+				<input value="02:00 PM" id="endtime"  class="ui-widget-content ui-corner-all">
+                <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+        </form>
+    </div>
+
 
 </body>
 </html>

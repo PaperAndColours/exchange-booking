@@ -109,7 +109,7 @@ $(function() {
 		event.preventDefault();
 		addUser();
 	});
-	$("#create-user").button().on("click", function() {
+	$("#create-booking").button().on("click", function() {
 		dialog.dialog("open");
 	});
 });
