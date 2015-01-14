@@ -30,8 +30,19 @@
         <p class="validateTips">All form fields are required.</p>
         <form>
             <fieldset>
+                <label for="title">Title</label>
+                <input type="text" name="title" id="client" value="Meeting" class="text ui-widget-content ui-corner-all">
                 <label for="client">Client</label>
                 <input type="text" name="client" id="client" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+				<label for="resources"> Room </label>
+				<select name="resources" id="resources">
+						<% for(var i=0; i<resources.length; i++) {%>
+						<option value="<%=resources[i].id%>"> <%= resources[i].name %> </option>
+						<% } %>
+				</select>
+				<fieldset>  <!-- Time Info-->
+				<label for="allDay"> Full Day Event? </label>
+				<input type="checkbox" id="allDay">
 				<label for="startdate">Start Date</label>
 				<input type="text" id="startdate" class="ui-widget-content ui-corner-all">
 				<label for="starttime">Start Time</label>
@@ -42,6 +53,7 @@
 
 				<label for="endtime">End Time</label>
 				<input value="02:00 PM" id="endtime"  class="ui-widget-content ui-corner-all">
+				</fieldset>
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
             </fieldset>
