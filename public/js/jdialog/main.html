@@ -8,6 +8,7 @@
 <link rel="stylesheet" href="../fullCalendarResources/lib/jquery-ui/ui/jquery-ui.theme.css">
 <link rel="stylesheet" href="../fullCalendarResources/lib/jquery-ui/ui/jquery-ui.css">
 <script src="../fullCalendarResources/lib/jquery/dist/jquery.js"></script>
+<script src="../globalize/globalize.js"></script>
 <script src="../fullCalendarResources/lib/jquery-ui/ui/jquery-ui.js"></script>
 <script src="script.js"></script>
 <link rel="stylesheet" href="style.css">
@@ -18,17 +19,24 @@
         <p class="validateTips">All form fields are required.</p>
         <form>
             <fieldset>
-                <label for="name">Name</label>
-                <input type="text" name="name" id="name" value="Jane Smith" class="text ui-widget-content ui-corner-all">
-                <label for="email">Email</label>
-                <input type="text" name="email" id="email" value="jane@smith.com" class="text ui-widget-content ui-corner-all">
-                <label for="password">Password</label>
-                <input type="password" name="password" id="password" value="xxxxxxx" class="text ui-widget-content ui-corner-all">
+                <label for="client">Client</label>
+                <input type="text" name="client" id="client" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+				<label for="startdate">Start Date</label>
+				<input type="text" id="startdate" class="ui-widget-content ui-corner-all">
+				<label for="starttime">Start Time</label>
+				<input id="starttime" value="01:00 PM" class="ui-widget-content ui-corner-all">
+
+				<label for="enddate">End Date</label>
+				<input type="text" id="enddate" class="ui-widget-content ui-corner-all">
+
+				<label for="endtime">End Time</label>
+				<input value="02:00 PM" id="endtime"  class="ui-widget-content ui-corner-all">
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
             </fieldset>
         </form>
     </div>
+
     <div id="users-contain" class="ui-widget">
         <h1>Existing Users:</h1>
         <table id="users" class="ui-widget ui-widget-content">
@@ -48,7 +56,11 @@
             </tbody>
         </table>
     </div>
+
+
     <button id="create-user">Create new user</button>
+
+
 </body>
 
 </html>
