@@ -1,21 +1,32 @@
 #---Front end-----------------
--Frontend/backend sync-
+Factor out js into seperate / single files
+
+Link popup box to creation of events
+	-Popup box appears when event created, instead of simple dialog
+	-Upon popup box submit, the information is submitted to the server
+	-Validation occurs
+
 Change calendar to use ajax queries
 	--Creating Events
 	--Deleting Events
 
-Make updates work with dragging/dropping between resources
+Add delete functionality to popup box
 
-Create popup box to change information when event clicked
+Validation to make sure that resources aren't double booked
+	-front end.. flag?
+	-back end validation
 
-Tweak calendar theme
-	-Individual colours for seperate resources
+Individual colours for seperate resources
 
--Navigability-
-Make calendar more intuitive to navigate for the purpose
-	-Easy navigation
+Click on day in month view = select day
 
-Model page on google calendar page
+
+#--------Style------------------
+Style popup window
+Style calendar
+Model page on google calendar page?
+
+Sort out/tidy up css classes
 
 
 Create user authentication
@@ -30,6 +41,7 @@ Create back end logic for:
 	Admin
 	Overview / Review
 
+#----------Internal-------------
 change Javascript libraries to bower - or sync bower with correct dir
 
 Find the way to execute mongo commands from command line (or python) - to auto-populate
@@ -37,6 +49,7 @@ Make the python tool more generic
 
 
 
---
-backup
-sync with quickbooks
+#----------Big essential features---------
+Sync With Quickbooks
+Sync With Charts / Graphs
+Backup
