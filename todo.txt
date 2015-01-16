@@ -1,8 +1,18 @@
 #---Front end-----------------
+Combine 
+
 Link popup box to creation of events
-	-Popup box appears when event created, instead of simple dialog
 	-Upon popup box submit, the information is submitted to the server
-	-Validation occurs
+	-Populate popup box with relevant information when clicked
+Front End Form Validation 
+	End time isn't before start time
+	Client name is valid
+	Resource is valid?
+	Date is in future
+
+	..Events don't overlap
+
+-Seperate create / update functionality
 
 Change calendar to use ajax queries
 	--Creating Events
@@ -23,6 +33,7 @@ No need to refresh after creating an event every time
 Style popup window
 Style calendar
 Model page on google calendar page?
+Separate box to add info
 
 Sort out/tidy up css classes
 
