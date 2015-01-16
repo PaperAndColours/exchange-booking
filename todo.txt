@@ -1,9 +1,24 @@
 #---Front end-----------------
-Combine 
+
+Form submission
+	Have a look + tidy up date/time adding code
+	Then submit properly
+
+Form UI
+	Make it impossible to select an end date before the start date
+	Make end date automatically update to startdate when start > end
+	Same with time:
+		Make it imposible to select an end time before the start time
+		Make end time automatically update when start > end
+		(Triggered when: times changed, days changed to line up)
 
 Link popup box to creation of events
 	-Upon popup box submit, the information is submitted to the server
 	-Populate popup box with relevant information when clicked
+
+Delete button
+Add delete functionality to popup box
+
 Front End Form Validation 
 	End time isn't before start time
 	Client name is valid
@@ -12,13 +27,15 @@ Front End Form Validation
 
 	..Events don't overlap
 
+Form populates with relevant information
+	When an exisitng event clicked
+	When a new event created by dragging
 -Seperate create / update functionality
 
-Change calendar to use ajax queries
+Calendar to use ajax queries
 	--Creating Events
 	--Deleting Events
 
-Add delete functionality to popup box
 
 Validation to make sure that resources aren't double booked
 	-front end.. flag?

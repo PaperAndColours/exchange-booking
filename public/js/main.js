@@ -144,6 +144,9 @@ $(function() {
 		else removeEndRange();
 	}
 	function datesEqual() {
+		if (!startdate.datepicker('getDate') || !enddate.datepicker('getDate')) return false;
+		console.log(startdate.datepicker('getDate'));;
+		console.log(enddate.datepicker('getDate'));
 		return startdate.datepicker('getDate').toString() == enddate.datepicker('getDate').toString();
 	}
 
@@ -172,8 +175,14 @@ $(function() {
 		}
 	});
 
-	startdate.datepicker({dateFormat : "dd MM yy"});
-	enddate.datepicker({dateFormat : "dd MM yy"});
+	startdate.datepicker({
+		dateFormat : "dd MM yy",
+		setDate : Date.now()
+	});
+	enddate.datepicker({
+		dateFormat : "dd MM yy",
+		setDate : Date.now()
+	});
 	startdate.datepicker("setDate", Date.now());
 	enddate.datepicker("setDate", Date.now());
 
@@ -184,6 +193,12 @@ $(function() {
 		updateEndRange($(this).val());
 	 });
 	startdate.on('change', function() {
+	    if (!allDayChecked) {
+			if (datesEqual()) updateEndRange(starttime.val())
+			else removeEndRange()
+		}
+	});
+	enddate.on('change', function() {
 	    if (!allDayChecked) {
 			if (datesEqual()) updateEndRange(starttime.val())
 			else removeEndRange()
