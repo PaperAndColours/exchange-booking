@@ -12,6 +12,7 @@ exports.list = function(req,res, next) {
 };
 
 exports.create = function(req, res, next) {
+	console.log(req.body);
 	var booking = new Booking(req.body);
 	booking.save(function(err) {
 		if (err) {

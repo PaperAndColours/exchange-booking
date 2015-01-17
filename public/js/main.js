@@ -1,8 +1,6 @@
 $(function() {
 	function sendCreate(event) {
-			console.log(event);
-			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources}
-			console.log(payload);
+			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event._resources}
 			$.ajax({
 			url: 'booking/',
 			type: 'POST',
@@ -18,9 +16,7 @@ $(function() {
 	}
 	
 	function sendUpdate(event) {
-			console.log(event)
 			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources}
-			console.log(payload)
 			$.ajax({
 			url: 'booking/'+event.id,
 			type: 'PUT',
@@ -62,7 +58,6 @@ $(function() {
         selectable: true,
         selectHelper: true,
 		select: function(start, end, ev) { //start, end, resources
-				console.log(ev);
 				dialog.dialog("open");
 				var title = prompt('Event Title:');
 				var eventData;
@@ -80,18 +75,12 @@ $(function() {
 				};
 			},
         eventClick: function (event) {
-		  //console.log("event clicked");
-          console.log(event);
   		  event.title = "CLICKED!";
         },
         eventDrop: function (event, delta, revertFunc) {
-		  //console.log("event dropped");
-          //console.log(event);
 		  sendUpdate(event);
         },
 	    eventResize: function (event, delta, revertFunc) {
-		  //console.log("event resized");
-		  //console.log(event);
 		  sendUpdate(event);
 		}
       });
@@ -135,7 +124,6 @@ $(function() {
 			bookingTime = moment(beginValue, "hh:mma")
 			minStep = moment.duration(30, "minutes")
 			earliestEnd = moment(bookingTime).add(minStep).format("hh:mma")
-			console.log(earliestEnd)
 			endtime.timepicker('option', 'durationTime', bookingTime.format("hh:mma"));
 			endtime.timepicker('option', 'minTime', earliestEnd);
 			endtime.timepicker('option', 'showDuration', true);
@@ -144,8 +132,6 @@ $(function() {
 	}
 	function datesEqual() {
 		if (!startdate.datepicker('getDate') || !enddate.datepicker('getDate')) return false;
-		console.log(startdate.datepicker('getDate'));;
-		console.log(enddate.datepicker('getDate'));
 		return startdate.datepicker('getDate').toString() == enddate.datepicker('getDate').toString();
 	}
 
@@ -310,16 +296,24 @@ function datesChronological(o1, o2, n) {
 			}
 		}
 		if (valid) {
-			start = startdate.val()+ " " + starttime.val()
-			end = enddate.val()+ " " + endtime.val()
-			console.log(start)
-			console.log(end)
-			payload = {"title": title.val(), "start": start, "end": end, "allDay": allDay.val(), "client": client.val(), "_resources" : resources.val()}
-			//sendCreate(payload);
+		var allDayChecked = $("#allDay").prop('checked');
+		if (!allDayChecked){
+			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(starttime.timepicker("getTime")).format("hh:mm a");
+			end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(endtime.timepicker("getTime")).format("hh:mm a");
+		}
+		else {
+			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY");
+			end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY");
+		}
+			console.log(start);
+			start = moment(start, "DD/MM/YYYY hh:mm a").toDate();
+			end = moment(end, "DD/MM/YYYY hh:mm a").toDate();
+			payload = {"title": title.val(), "start": start, "end": end, "allDay": allDayChecked, "client": client.val(), "_resources" : resources.val()}
+			console.log(payload);
+			sendCreate(payload);
 			
 			dialog.dialog("close");
 		}
-		console.log(valid);
 		return valid;
 	}
 
