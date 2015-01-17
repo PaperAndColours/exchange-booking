@@ -86,3 +86,4 @@ Make the python tool more generic
 Sync With Quickbooks
 Sync With Charts / Graphs
 Backup
+Add 'provisional' events for client side

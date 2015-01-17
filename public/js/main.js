@@ -103,7 +103,6 @@ $(function() {
       });
     });
 
- $(function() {
 	var starttime = $("#starttime");
 	var endtime = $("#endtime");
 	var allDay = $("#allDay");
@@ -204,7 +203,6 @@ $(function() {
 			else removeEndRange()
 		}
 	});
- });
 
 
 
@@ -251,17 +249,66 @@ $(function() {
 		}
 	}
 
+	function checkDate(o, n) {
+		if (!moment(o.datepicker("getDate")).isValid()) {
+			o.addClass("ui-state-error");
+			updateTips(n);
+			return false;
+		} else {
+			return true;
+		}
+	}
+	function checkTime(o, n) {
+		if (!moment(o.timepicker("getTime")).isValid()){
+			o.addClass("ui-state-error");
+			updateTips(n);
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function timesChronological(o1, o2, n) {
+		timeA = moment(o1.timepicker("getTime"));
+		timeB = moment(o2.timepicker("getTime"));
+		if (!timeB.isAfter(timeA))	{
+			o1.addClass("ui-state-error");
+			o2.addClass("ui-state-error");
+			updateTips(n);
+			return false;
+		} else {
+			return true;
+		}
+	}
+function datesChronological(o1, o2, n) {
+		dateA = moment(o1.datepicker("getDate"));
+		dateB = moment(o2.datepicker("getDate"));
+		if (!dateB.isAfter(dateA) && !dateB.isSame(dateA))	{
+			o1.addClass("ui-state-error");
+			o2.addClass("ui-state-error");
+			updateTips(n);
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	function addBooking() {
 		var valid = true;
 		allFields.removeClass("ui-state-error");
-		valid = valid && checkLength(client, "title", 2, 30);
 		valid = valid && checkLength(client, "client", 2, 30);
-		valid = valid && checkRegexp(client, /^[a-z]([0-9a-z_\s])+$/i, "Event title  may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
 		valid = valid && checkRegexp(client, /^[a-z]([0-9a-z_\s])+$/i, "Client Name may consist of a-z, 0-9, underscores, spaces and must begin with a letter.");
-		//valid = valid && checkRegexp(startdate, dateRegex, "Date must be in the format dd/mm/yy");
-		//valid = valid && checkRegexp(enddate, dateRegex, "Date must be in the format dd/mm/yy");
-		//valid = valid && checkRegexp(starttime, timeRegex, "Time must be in the format: 1:00 PM");
-		//valid = valid && checkRegexp(endtime, timeRegex, "Time must be in the format: 1:00 PM");
+		valid = valid && checkDate(startdate, "Must be a valid date");
+		valid = valid && checkDate(enddate, "Must be a valid date");
+
+		valid = valid && datesChronological(startdate, enddate, "End date must be after or same as Start date");
+		if (!$("#allDay").prop('checked')){
+			valid = valid && checkTime(starttime, "Must be a valid time");
+			valid = valid && checkTime(endtime, "Must be a valid time");
+			if(datesEqual()){
+				valid = valid && timesChronological(starttime, endtime, "End time must be after start time!")
+			}
+		}
 		if (valid) {
 			start = startdate.val()+ " " + starttime.val()
 			end = enddate.val()+ " " + endtime.val()
@@ -272,6 +319,7 @@ $(function() {
 			
 			dialog.dialog("close");
 		}
+		console.log(valid);
 		return valid;
 	}
 
