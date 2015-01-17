@@ -3,7 +3,7 @@
 <head>
   <meta charset='utf-8'/>
   <link href='/css/style.css' rel='stylesheet'/>
-  <link href='/css/style2.css' rel='stylesheet'/>
+  <link href='/css/style2.css' rel='stylesheet'/> 
   <link href='/js/fullCalendarResources/dist/fullcalendar.css' rel='stylesheet'/>
   <link href='/js/bower_components/timepicker/jquery.timepicker.css' rel='stylesheet'/>
   <link href='/js/fullCalendarResources/dist/fullcalendar.print.css' rel='stylesheet' media='print'/>
@@ -19,11 +19,6 @@
 </head>
 <body>
     <button id="create-booking">Create new booking</button>
-<form>Select the resources you wanna filter:
-  <% for(var i=0; i<resources.length; i++) {%>
-  <input name="<%=resources[i].id%>" type="checkbox" checked /> <%= resources[i].name %>
-  <% } %>
-</form>
 <div id='calendar'></div>
 
     <div id="dialog-form" title="Create new user">
@@ -41,18 +36,16 @@
 						<% } %>
 				</select>
 				<fieldset>  <!-- Time Info-->
-				<label for="allDay"> Full Day Event? </label>
-				<input type="checkbox" id="allDay">
-				<label for="startdate">Start Date</label>
-				<input type="text" id="startdate" class="ui-widget-content ui-corner-all">
-				<label for="starttime">Start Time</label>
-				<input id="starttime" class="ui-widget-content ui-corner-all">
+				<label for="allDay" class="ownRow"> Full Day Event? </label>
+				<input type="checkbox" id="allDay" class="ownRow">
+				<label for="startdate" class="ownRow">Start</label>
+				<input type="text" id="startdate" class="ui-widget-content ui-corner-all multiRow">
+				<input id="starttime" class="ui-widget-content ui-corner-all multiRow">
 
-				<label for="enddate">End Date</label>
-				<input type="text" id="enddate" class="ui-widget-content ui-corner-all">
+				<label for="enddate" class="ownRow">End</label>
+				<input type="text" id="enddate" class="ui-widget-content ui-corner-all multiRow">
 
-				<label for="endtime">End Time</label>
-				<input id="endtime"  class="ui-widget-content ui-corner-all">
+				<input id="endtime"  class="ui-widget-content ui-corner-all multiRow">
 				</fieldset>
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->
                 <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
@@ -60,6 +53,11 @@
         </form>
     </div>
 
+<form>Select the resources you wanna filter:
+  <% for(var i=0; i<resources.length; i++) {%>
+  <input name="<%=resources[i].id%>" type="checkbox" checked /> <%= resources[i].name %>
+  <% } %>
+</form>
 
 </body>
 </html>

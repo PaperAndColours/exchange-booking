@@ -325,8 +325,8 @@ function datesChronological(o1, o2, n) {
 
 	dialog = $("#dialog-form").dialog({
 		autoOpen: false,
-		height: 900,
-		width: 950,
+		height: 500,
+		width: 350,
 		modal: true,
 		buttons: {
 			"Save Booking": addBooking,
