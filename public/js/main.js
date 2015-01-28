@@ -3,7 +3,7 @@ $(function() {
 	function sendCreate(event) {
 			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event._resources}
 			$.ajax({
-			url: 'calendar/booking/',
+			url: 'booking/',
 			type: 'POST',
 			data: JSON.stringify(payload),
 			contentType: 'application/json; charset=utf-8',
@@ -19,7 +19,7 @@ $(function() {
 	function sendUpdate(event) {
 			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources}
 			$.ajax({
-			url: 'calendar/booking/'+event.id,
+			url: 'booking/'+event.id,
 			type: 'PUT',
 			data: JSON.stringify(payload),
 			contentType: 'application/json; charset=utf-8',
@@ -46,14 +46,14 @@ $(function() {
         defaultView: 'resourceDay',
         editable: true,
         droppable: true,
-        resources: 'calendar/rooms',
+        resources: 'rooms',
         resourceFilter: function (resource) {
           var active = $("input").map(function(){
             return this.checked ? this.name : null;
           }).get();
           return $.inArray(resource.id, active) > -1;
         },
-        events: 'calendar/booking',
+        events: 'booking',
         // the 'ev' parameter is the mouse event rather than the resource 'event'
         // the ev.data is the resource column clicked upon
         selectable: true,
