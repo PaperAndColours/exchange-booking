@@ -5,6 +5,9 @@ Today:
 4. find a better way to sync id across front/back end (does the logic belong in controller?)
 
 #---Front end-----------------
+Fix the bug outlined here: http://www.ikelin.com/fullcalendar-resource-day-view-bug/
+Make sure calendar reverts. when server operation not successful
+
 Add ID when UPDATING event (Probably create a separate dialog)
 
 Chop multi-day events into separate events (Not sure this is necessary actually.i think calendar can handle it)

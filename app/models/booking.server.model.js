@@ -19,6 +19,12 @@ BookingSchema.virtual('resources').get(function() {
 	return this._resources._id;
 });
 
+BookingSchema.virtual('color').get(function() {
+	return this._resources.className;
+})
+BookingSchema.virtual('backgroundColor').get(function() {
+	return this._resources.className;
+});
 
 BookingSchema.set('toJSON', { virtuals: true});
 mongoose.model('Booking', BookingSchema);

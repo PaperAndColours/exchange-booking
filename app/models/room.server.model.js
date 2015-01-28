@@ -3,6 +3,7 @@ var mongoose = require('mongoose'),
 
 var RoomSchema = new Schema({
     name: {type: String, required: true},
+    className: {type: String},
 });
 
 RoomSchema.set('toJSON', {getters: false, virtuals: true});

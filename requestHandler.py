@@ -15,8 +15,8 @@ def makeTimestamp(hours, days=0):
 	return calendar.timegm(past.timetuple())*1000
 	
 #--Rooms--
-def roomCreate(name):
-	payload = {"name": name}
+def roomCreate(name, className=None):
+	payload = {"name": name, "className": className}
 	return requests.post(urlRooms, json.dumps(payload), headers=contentJSON)
 
 def roomListAll():
@@ -35,7 +35,8 @@ def bookingListAll():
 #--Room gui-----
 def createRoomGUI():
 	roomName = raw_input("Room Name: ")
-	roomCreate(roomName)
+	className = raw_input("Room Class Name: ")
+	roomCreate(roomName, className)
 
 def printRoomsGUI():
 	print roomListAll().content
