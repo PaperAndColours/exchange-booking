@@ -1,3 +1,9 @@
+Today:
+1. Make a front end that displays the bookings
+2. Add colours to the rooms
+3. Finish update/delete for calendar
+4. find a better way to sync id across front/back end (does the logic belong in controller?)
+
 #---Front end-----------------
 
 Date aint comin up in form creation pop (but time is ok)
