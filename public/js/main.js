@@ -1,8 +1,9 @@
 $(function() {
+//---------Calendar Functions-----------
 	function sendCreate(event) {
 			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event._resources}
 			$.ajax({
-			url: 'booking/',
+			url: 'calendar/booking/',
 			type: 'POST',
 			data: JSON.stringify(payload),
 			contentType: 'application/json; charset=utf-8',
@@ -18,7 +19,7 @@ $(function() {
 	function sendUpdate(event) {
 			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources}
 			$.ajax({
-			url: 'booking/'+event.id,
+			url: 'calendar/booking/'+event.id,
 			type: 'PUT',
 			data: JSON.stringify(payload),
 			contentType: 'application/json; charset=utf-8',
@@ -29,7 +30,7 @@ $(function() {
 				}
 			});
 	}
-
+//------------Calendar---------------
     $(document).ready(function () {
       var date = new Date();
       var d = date.getDate();
@@ -45,37 +46,24 @@ $(function() {
         defaultView: 'resourceDay',
         editable: true,
         droppable: true,
-        resources: 'rooms',
+        resources: 'calendar/rooms',
         resourceFilter: function (resource) {
           var active = $("input").map(function(){
             return this.checked ? this.name : null;
           }).get();
           return $.inArray(resource.id, active) > -1;
         },
-        events: 'booking',
+        events: 'calendar/booking',
         // the 'ev' parameter is the mouse event rather than the resource 'event'
         // the ev.data is the resource column clicked upon
         selectable: true,
         selectHelper: true,
 		select: function(start, end, ev) { //start, end, resources
-				dialog.dialog("open");
-				var title = prompt('Event Title:');
-				var eventData;
-				var allDay = !start.hasTime();
-				if (title) {
-					eventData = {
-						title: title,
-						start: start,
-						allDay: allDay,
-						end: end,
-						resources: ev.data.id,
-						client: "bob"
-					};
-				sendCreate(eventData);
-				};
+				eventData = {"start": start, "end": end, "resources": ev.data.id};
+				createDialog(eventData);
 			},
         eventClick: function (event) {
-  		  event.title = "CLICKED!";
+		 createDialog(event);
         },
         eventDrop: function (event, delta, revertFunc) {
 		  sendUpdate(event);
@@ -92,15 +80,22 @@ $(function() {
       });
     });
 
-	var starttime = $("#starttime");
-	var endtime = $("#endtime");
-	var allDay = $("#allDay");
-	var startdate = $("#startdate");
-	var enddate = $("#enddate");
+//----------Modal Form----------------------
+	var dialog, form,
+		title = $("#title"),
+		client = $("#client"),
+		resources = $("#resources"),
+		allDay = $("#allDay"),
+		startdate = $("#startdate"),
+		enddate = $("#enddate"),
+		starttime = $("#starttime"),
+		endtime = $("#endtime"),
+		allFields = $([]).add(title).add(client).add(resources).add(allDay).add(startdate).add(enddate).add(starttime).add(endtime),
+		tips = $(".validateTips"),
 
-	var allDayChecked;
-	var tempStart;
-	var tempEnd;
+		allDayChecked,
+		tempStart,
+		tempEnd;
 
 	function createStartTime() {
      starttime.timepicker({
@@ -191,19 +186,8 @@ $(function() {
 	});
 
 
+//-----Form submission & validation
 
-
-	var dialog, form,
-		title = $("#title"),
-		client = $("#client"),
-		resources = $("#resources"),
-		allDay = $("#allDay"),
-		startdate = $("#startdate"),
-		enddate = $("#enddate"),
-		starttime = $("#starttime"),
-		endtime = $("#endtime"),
-		allFields = $([]).add(title).add(client).add(resources).add(allDay).add(startdate).add(enddate).add(starttime).add(endtime),
-		tips = $(".validateTips");
 
 	function updateTips(t) {
 		tips
@@ -278,8 +262,7 @@ function datesChronological(o1, o2, n) {
 			return true;
 		}
 	}
-
-	function addBooking() {
+	function validateBookingForm() {
 		var valid = true;
 		allFields.removeClass("ui-state-error");
 		valid = valid && checkLength(client, "client", 2, 30);
@@ -295,7 +278,10 @@ function datesChronological(o1, o2, n) {
 				valid = valid && timesChronological(starttime, endtime, "End time must be after start time!")
 			}
 		}
-		if (valid) {
+	return valid;
+	}
+	function addBooking() {
+		if (validateBookingForm()) {
 		var allDayChecked = $("#allDay").prop('checked');
 		if (!allDayChecked){
 			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(starttime.timepicker("getTime")).format("hh:mm a");
@@ -313,8 +299,35 @@ function datesChronological(o1, o2, n) {
 			sendCreate(payload);
 			
 			dialog.dialog("close");
+			return true;
 		}
-		return valid;
+		else return false;
+	
+	}
+
+//--------Form Creation-------------
+	function createDialog(data) {
+		console.log(data);
+		dialog.dialog("open");
+		if (data !== undefined) {
+			if (data.start != undefined) {
+				starttime.timepicker("setTime", moment(data.start).format("hh:mm a"));
+				startdate.datepicker("setDate", moment(data.start).format("DD MMMM YYYY"));
+			}
+			if (data.end != undefined) {
+				endtime.timepicker("setTime", moment(data.end).format("hh:mm a"));
+				enddate.datepicker("setDate", moment(data.end).format("DD MMMM YYYY"));
+			}
+
+			if (data.title != undefined)
+				title.val(data.title);
+			if (data.allDay != undefined)
+				allDay.prop("checked", data.allDay);
+			if (data.client != undefined)
+				client.val(data.client);
+			if (data.resources != undefined)
+				resources.val(data.resources);
+		}
 	}
 
 	dialog = $("#dialog-form").dialog({
@@ -324,6 +337,7 @@ function datesChronological(o1, o2, n) {
 		modal: true,
 		buttons: {
 			"Save Booking": addBooking,
+			"Update Booking": addBooking,
 			Cancel: function() {
 				dialog.dialog("close");
 			}
@@ -339,10 +353,10 @@ function datesChronological(o1, o2, n) {
 	});
 
 	$("#create-booking").button().on("click", function() {
-		dialog.dialog("open");
+		createDialog();
 	});
 
 	$(document).ready(function () {
-			dialog.dialog("open");
+		createDialog();
 	})
 });
