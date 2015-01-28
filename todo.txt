@@ -5,11 +5,9 @@ Today:
 4. find a better way to sync id across front/back end (does the logic belong in controller?)
 
 #---Front end-----------------
-
-Date aint comin up in form creation pop (but time is ok)
 Add ID when UPDATING event (Probably create a separate dialog)
 
-Chop multi-day events into separate events
+Chop multi-day events into separate events (Not sure this is necessary actually.i think calendar can handle it)
 
 Form UI (Do I need all this? I've got form validation)
 	Make it impossible to select an end date before the start date
@@ -52,7 +50,11 @@ Separate box to add info
 Sort out/tidy up css classes
 
 #---------Both ends sort of---
-Get rid of necessity for separate 'title' property
+Get rid of necessity for separate 'title' property, change it to description
+
+Try to make it so that form values aren't named individually, so that adding a new one to the form/database is fairly seemless. A.k.a. get rid of "payload" variables
+
+Sort out different kinds of id in database/front end (probably controller logic?)
 
 #---------Back end-----------
 Validation of dates, times
