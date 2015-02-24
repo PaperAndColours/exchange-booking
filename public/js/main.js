@@ -26,7 +26,7 @@ $(function() {
 			dataType: 'json',
 			async: false,
 			success: function(msg) {
-				alert(msg);
+				//alert(msg._resources);
 				}
 			});
 	}
@@ -60,13 +60,14 @@ $(function() {
         selectHelper: true,
 		select: function(start, end, ev) { //start, end, resources
 				eventData = {"start": start, "end": end, "resources": ev.data.id};
-				createDialog(eventData);
+				createSaveDialog(eventData);
 			},
         eventClick: function (event) {
-		 createDialog(event);
+		 createUpdateDialog(event);
         },
         eventDrop: function (event, delta, revertFunc) {
 		  sendUpdate(event);
+		  $('#calendar').fullCalendar('refetchEvents');
         },
 	    eventResize: function (event, delta, revertFunc) {
 		  sendUpdate(event);
@@ -90,6 +91,7 @@ $(function() {
 		enddate = $("#enddate"),
 		starttime = $("#starttime"),
 		endtime = $("#endtime"),
+		eventID = $("#eventID"),
 		allFields = $([]).add(title).add(client).add(resources).add(allDay).add(startdate).add(enddate).add(starttime).add(endtime),
 		tips = $(".validateTips"),
 
@@ -131,6 +133,9 @@ $(function() {
 	}
 
 	allDay.on('click', function() {
+		prepareAllDay();
+	})
+	function prepareAllDay() {
 	 	allDayChecked = allDay.prop('checked');
 		if (allDayChecked) {
 			 tempStart = starttime.timepicker('getTime');
@@ -153,7 +158,7 @@ $(function() {
 			 endtime.timepicker('setTime', tempEnd);
 			 updateEndRange(starttime.val())
 		}
-	});
+	};
 
 	startdate.datepicker({
 		dateFormat : "dd MM yy",
@@ -280,6 +285,38 @@ function datesChronological(o1, o2, n) {
 		}
 	return valid;
 	}
+
+	function updateBooking() {
+		if (validateBookingForm()) {
+		var allDayChecked = $("#allDay").prop('checked');
+		if (!allDayChecked){
+			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(starttime.timepicker("getTime")).format("hh:mm a");
+			end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(endtime.timepicker("getTime")).format("hh:mm a");
+		}
+		else {
+			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY");
+			end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY");
+		}
+			start = moment(start, "DD/MM/YYYY hh:mm a").toDate();
+			end = moment(end, "DD/MM/YYYY hh:mm a").toDate();
+			payload = {"title": title.val(), "start": start, "end": end, "allDay": allDayChecked, "client": client.val(), "_resources" : resources.val(), "id" : eventID.val()}
+			event = $("#calendar").fullCalendar('clientEvents', eventID.val())[0]
+			event.title = title.val();
+			event.start = start;
+			event.end = end;
+			event.allDay = allDayChecked;
+			event.client = client.val();
+			event.resources = resources.val();
+			sendUpdate(event);
+			$("#calendar").fullCalendar('updateEvent', event)
+			$('#calendar').fullCalendar('refetchEvents');
+			
+			dialog.dialog("close");
+			return true;
+		}
+		else return false;
+	}
+
 	function addBooking() {
 		if (validateBookingForm()) {
 		var allDayChecked = $("#allDay").prop('checked');
@@ -291,23 +328,28 @@ function datesChronological(o1, o2, n) {
 			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY");
 			end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY");
 		}
-			console.log(start);
 			start = moment(start, "DD/MM/YYYY hh:mm a").toDate();
 			end = moment(end, "DD/MM/YYYY hh:mm a").toDate();
 			payload = {"title": title.val(), "start": start, "end": end, "allDay": allDayChecked, "client": client.val(), "_resources" : resources.val()}
-			console.log(payload);
 			sendCreate(payload);
 			
 			dialog.dialog("close");
 			return true;
 		}
 		else return false;
-	
 	}
 
 //--------Form Creation-------------
+	function createUpdateDialog(data) {
+		createDialog(data)
+		if (data.id !== undefined){
+			eventID.val(data.id);
+		};
+	}
+	function createSaveDialog(data) {
+		createDialog(data)
+	}
 	function createDialog(data) {
-		console.log(data);
 		dialog.dialog("open");
 		if (data !== undefined) {
 			if (data.start != undefined) {
@@ -337,7 +379,7 @@ function datesChronological(o1, o2, n) {
 		modal: true,
 		buttons: {
 			"Save Booking": addBooking,
-			"Update Booking": addBooking,
+			"Update Booking": updateBooking,
 			Cancel: function() {
 				dialog.dialog("close");
 			}
@@ -353,10 +395,6 @@ function datesChronological(o1, o2, n) {
 	});
 
 	$("#create-booking").button().on("click", function() {
-		createDialog();
+		createSaveDialog();
 	});
-
-	$(document).ready(function () {
-		createDialog();
-	})
 });

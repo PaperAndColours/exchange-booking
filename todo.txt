@@ -1,3 +1,12 @@
+Find out why dialog is clearing when all day event is checked
+It's clearing because there is a single property for "allDay" that doesn't take specific events into account, i don't think.
+
+It needs to be changed so that it also updates when a new event loads, to take into account the status of the individual event.
+Also, it could be a slightly more generic method. It can be invoked by addEvent, updateEvent, and allDay.click?
+Create a set of methods that can be used to turn on/off extra (or allday) date information when it's clicked)?
+
+Create a faster way to refetch events (using specific query given) cos im doing it a lot. (But prob not for next time i see tony)
+
 Today:
 1. Make a front end that displays the bookings
 3. Finish update/delete for calendar

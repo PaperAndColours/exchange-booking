@@ -19,4 +19,9 @@ line-height: 20px;
 .red {
 background-color: rgb(255, 190, 190);
 }
-
+.orange {
+background-color: orange;
+}
+.gray {
+background-color: gray;
+}
