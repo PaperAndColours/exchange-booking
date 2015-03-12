@@ -1,18 +1,23 @@
-Update/Save
++Update/Save
 -----------
 Make sure all of the functionality is working okay
-	Just browse through, make sure it is okay
+	Just browse through, make sure it is okay.. refresh knowledge of the code, the different methods
+	Document javascript
 
 #===Front end=================
-jQuery Dialog: 1 Button
++jQuery Dialog: 1 Button
 -----------------------
 Make sure only relevant update/save button is showing - not both
 
-Delete Button
++Delete Button
 ------------
 Add Delete button to dialogue
 
-AllDay Issues
++Hidden ID
+---------
+Make ID into a hidden form, rather than text area
+
++AllDay Issues
 ------------
 Find out why dialog is clearing when all day event is checked
 It's clearing because there is a single property for "allDay" that doesn't take specific events into account, i don't think.
@@ -21,7 +26,7 @@ It needs to be changed so that it also updates when a new event loads, to take i
 Also, it could be a slightly more generic method. It can be invoked by addEvent, updateEvent, and allDay.click?
 Create a set of methods that can be used to turn on/off extra (or allday) date information when it's clicked)?
 
-Form Reflects Updated Model
++Form Reflects Updated Model
 ----------------------------
 Make forms reflect the new updated model:
 	A way to add costs
@@ -32,7 +37,7 @@ No double bookings
 ------------------
 	-front end.. flag?
 
-Finances display
++Finances display
 -----------------
 Create a screen to display finances, with breakdowns
 Click on day in month view = select day
@@ -41,9 +46,10 @@ Payload
 -------
 Change to using event object directly, to remove the need to list the variables separately
 
-Revert
++Revert
 ------
 Make sure calendar reverts. when server operation not successful
+-Make sure update/save methods return success or failure
 Fix the bug outlined here: http://www.ikelin.com/fullcalendar-resource-day-view-bug/
 
 Front End Form Validation 
@@ -65,7 +71,7 @@ Form UI
 		(Triggered when: times changed, days changed to line up)
 
 #=========Back end===========
-Revise Booking model
++Revise Booking model
 --------------------
 Each booking needs extra information:
 	1. Description field
@@ -80,11 +86,11 @@ Add cost for rooms
 Possibly create virtual for title to map to client
 Possibly rename _resources to monRooms, to make easier to comprehend.. 
 
-Validation
++Validation
 ----------
 Add validation for user submitted values
 
-User Authentication
++User Authentication
 -------------------
 Create user authentication
 
@@ -114,11 +120,11 @@ Change white room from grey to white
 Sort out/tidy up css classes
 
 #=======Server===================
-Heroku
++Heroku
 ------
 Upload app onto heroku and make sure it works
 
-Resource path
++Resource path
 -------------
 Post onto SO about bug where resources address changes
 

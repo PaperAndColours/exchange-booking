@@ -1,6 +1,9 @@
 $(function() {
 //---------Calendar Functions-----------
 	function sendCreate(event) {
+	/**
+	* Save booking on server
+	*/
 			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event._resources}
 			$.ajax({
 			url: 'booking/',
@@ -17,6 +20,9 @@ $(function() {
 	}
 	
 	function sendUpdate(event) {
+	/**
+	* Update booking on server
+	*/
 			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources}
 			$.ajax({
 			url: 'booking/'+event.id,
@@ -30,8 +36,27 @@ $(function() {
 				}
 			});
 	}
+	function sendDelete(event) {
+	/**
+	* Update booking on server
+	*/
+			$.ajax({
+			url: 'booking/'+event.id,
+			type: 'DELETE',
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'json',
+			async: false,
+			success: function(msg) {
+				//alert(msg._resources);
+				}
+			});
+	}
 //------------Calendar---------------
     $(document).ready(function () {
+	/*
+	* Set up fullcalendar using fullcalendar functionality
+	* See http://fullcalendar.io for info
+	*/
       var date = new Date();
       var d = date.getDate();
       var m = date.getMonth();
@@ -73,15 +98,14 @@ $(function() {
 		  sendUpdate(event);
 		}
       });
-    });
 
-    $(document).ready(function() {
+	  //Activate calendar into div
       $('input:checkbox').change(function(){
         $('#calendar').fullCalendar('render');
       });
     });
 
-//----------Modal Form----------------------
+//----------Form creation and initialization----------------------
 	var dialog, form,
 		title = $("#title"),
 		client = $("#client"),
@@ -168,6 +192,8 @@ $(function() {
 		dateFormat : "dd MM yy",
 		setDate : Date.now()
 	});
+
+	//TODO:Wrap this stuff into a function, or on document load
 	startdate.datepicker("setDate", Date.now());
 	enddate.datepicker("setDate", Date.now());
 
@@ -191,9 +217,7 @@ $(function() {
 	});
 
 
-//-----Form submission & validation
-
-
+//-----Form validation-----------------------
 	function updateTips(t) {
 		tips
 			.text(t)
@@ -286,10 +310,13 @@ function datesChronological(o1, o2, n) {
 	return valid;
 	}
 
-	function updateBooking() {
-		if (validateBookingForm()) {
+//-----Form Submission-----------------
+function createBookingDates() {
+		//TODO: Make sure all variables for each form property only have 1 definition, not multiple ones
 		var allDayChecked = $("#allDay").prop('checked');
 		if (!allDayChecked){
+		//TODO: Check date format, make sure there is a consistent protocol
+		//Even develop a couple of functions for them
 			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(starttime.timepicker("getTime")).format("hh:mm a");
 			end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(endtime.timepicker("getTime")).format("hh:mm a");
 		}
@@ -299,18 +326,30 @@ function datesChronological(o1, o2, n) {
 		}
 			start = moment(start, "DD/MM/YYYY hh:mm a").toDate();
 			end = moment(end, "DD/MM/YYYY hh:mm a").toDate();
-			payload = {"title": title.val(), "start": start, "end": end, "allDay": allDayChecked, "client": client.val(), "_resources" : resources.val(), "id" : eventID.val()}
+
+	console.log(start);
+	console.log(end);
+	returnObj = [];
+	returnObj.start = start;
+	returnObj.end = end;
+	returnObj.allDayChecked = allDayChecked;
+	return returnObj;
+}
+
+	function updateBooking() {
+		if (validateBookingForm()) {
+			bookingInfo = createBookingDates();
+			console.log(bookingInfo);
 			event = $("#calendar").fullCalendar('clientEvents', eventID.val())[0]
 			event.title = title.val();
-			event.start = start;
-			event.end = end;
-			event.allDay = allDayChecked;
+			event.start = bookingInfo.start;
+			event.end = bookingInfo.end;
+			event.allDay = bookingInfo.allDayChecked;
 			event.client = client.val();
 			event.resources = resources.val();
 			sendUpdate(event);
 			$("#calendar").fullCalendar('updateEvent', event)
 			$('#calendar').fullCalendar('refetchEvents');
-			
 			dialog.dialog("close");
 			return true;
 		}
@@ -319,18 +358,10 @@ function datesChronological(o1, o2, n) {
 
 	function addBooking() {
 		if (validateBookingForm()) {
-		var allDayChecked = $("#allDay").prop('checked');
-		if (!allDayChecked){
-			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(starttime.timepicker("getTime")).format("hh:mm a");
-			end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(endtime.timepicker("getTime")).format("hh:mm a");
-		}
-		else {
-			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY");
-			end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY");
-		}
-			start = moment(start, "DD/MM/YYYY hh:mm a").toDate();
-			end = moment(end, "DD/MM/YYYY hh:mm a").toDate();
-			payload = {"title": title.val(), "start": start, "end": end, "allDay": allDayChecked, "client": client.val(), "_resources" : resources.val()}
+			bookingInfo = createBookingDates();
+			console.log(bookingInfo);
+
+			payload = {"title": title.val(), "start": bookingInfo.start, "end": bookingInfo.end, "allDay": bookingInfo.allDayChecked, "client": client.val(), "_resources" : resources.val()}
 			sendCreate(payload);
 			
 			dialog.dialog("close");
@@ -338,6 +369,13 @@ function datesChronological(o1, o2, n) {
 		}
 		else return false;
 	}
+
+	function deleteBooking() {
+		event = $("#calendar").fullCalendar('clientEvents', eventID.val())[0]
+		sendDelete(event);
+		$('#calendar').fullCalendar('refetchEvents');
+		dialog.dialog("close");
+	} 
 
 //--------Form Creation-------------
 	function createUpdateDialog(data) {
@@ -373,6 +411,8 @@ function datesChronological(o1, o2, n) {
 	}
 
 	dialog = $("#dialog-form").dialog({
+		//TODO: Hide buttons using page 
+		//http://api.jqueryui.com/dialog/#option-buttons
 		autoOpen: false,
 		height: 500,
 		width: 350,
@@ -380,6 +420,7 @@ function datesChronological(o1, o2, n) {
 		buttons: {
 			"Save Booking": addBooking,
 			"Update Booking": updateBooking,
+			"Delete Booking": deleteBooking,
 			Cancel: function() {
 				dialog.dialog("close");
 			}
