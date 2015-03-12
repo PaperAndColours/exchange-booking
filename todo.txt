@@ -5,10 +5,6 @@ Make sure all of the functionality is working okay
 	Document javascript
 
 #===Front end=================
-DONE: +Hidden ID
----------
-Make ID into a hidden form, rather than text area
-
 +AllDay Issues
 ------------
 Find out why dialog is clearing when all day event is checked
@@ -22,8 +18,8 @@ Create a set of methods that can be used to turn on/off extra (or allday) date i
 ----------------------------
 Make forms reflect the new updated model:
 	A way to add costs
-	A description textarea box
-	Make client the main heading.. Unless already fixed with a serverside virtual 
+	!IN PROGRESS: A description textarea box
+	Make client the main heading.. -And remove the event title heading (Unless already fixed with a serverside virtual )
 
 No double bookings
 ------------------

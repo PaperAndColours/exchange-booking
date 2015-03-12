@@ -2,11 +2,11 @@ var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
 var BookingSchema = new Schema({
-	title: {type: String, required: true},
+	client: {type: String, required: true},
 	start: {type: Date, required: true},
 	end: {type: Date, required: true},
 	allDay: {type: Boolean, required: true},
-	client: {type: String, required: true},
+	description: {type: String, required: false },
 	_resources: { 
 		type: Schema.Types.ObjectId,
 		ref: 'Room',
@@ -14,6 +14,10 @@ var BookingSchema = new Schema({
 	}
 });
 
+
+BookingSchema.virtual('title').get(function() {
+	return this.client;
+});
 
 BookingSchema.virtual('resources').get(function() {
 	return this._resources._id;
