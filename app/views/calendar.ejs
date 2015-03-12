@@ -5,6 +5,7 @@
   <link href='/css/style.css' rel='stylesheet'/>
   <link href='/js/fullCalendarResources/dist/fullcalendar.css' rel='stylesheet'/>
   <link href='/js/bower_components/timepicker/jquery.timepicker.css' rel='stylesheet'/>
+  <link href="/js/bower_components/DataTables/media/css/jquery.dataTables.min.css" rel='stylesheet'>
   <link href='/js/fullCalendarResources/dist/fullcalendar.print.css' rel='stylesheet' media='print'/>
   <link rel="stylesheet" href="/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.theme.css">
   <link rel="stylesheet" href="/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.css">
@@ -12,6 +13,7 @@
   <script src='/js/fullCalendarResources/lib/moment/moment.js'></script>
   <script src='/js/fullCalendarResources/lib/jquery/dist/jquery.js'></script>
   <script src="/js/bower_components/timepicker/jquery.timepicker.js"></script>
+  <script src="/js/bower_components/DataTables/media/js/jquery.dataTables.min.js"></script>
   <script src='/js/fullCalendarResources/lib/jquery-ui/ui/jquery-ui.js'></script>
   <script src='/js/fullCalendarResources/dist/fullcalendar.js'></script>
   <script src="/js/main.js"></script>
@@ -24,10 +26,11 @@
         <p class="validateTips">All form fields are required.</p>
         <form>
             <fieldset>
-                <label for="title">Title</label>
-                <input type="text" name="title" id="title" value="Meeting" class="text ui-widget-content ui-corner-all">
                 <label for="client">Client</label>
                 <input type="text" name="client" id="client" value="Jane Smith" class="text ui-widget-content ui-corner-all">
+
+				<label for="provisional" class="ownRow"> Provisional Booking? </label>
+				<input type="checkbox" checked id="provisional" class="ownRow">
 				<label for="resources"> Room </label>
 				<select name="resources" id="resources">
 						<% for(var i=0; i<resources.length; i++) {%>
@@ -43,8 +46,22 @@
 
 				<label for="enddate" class="ownRow">End</label>
 				<input type="text" id="enddate" class="ui-widget-content ui-corner-all multiRow">
-
 				<input id="endtime"  class="ui-widget-content ui-corner-all multiRow">
+
+				<label for="description" class="ownRow">Details / Description</label>
+				<textarea id="description" cols="40" rows="20" class="ui-widget-content ui-corner-all"></textarea>
+
+				<table id="charges">
+					<thead>
+						<th> Amount </th>
+						<th> Type </th>
+						<th> Detail </th>
+						<th> ID </th>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+				<button id="addCharge"> Add Charge </button>
 				<input type="hidden" id="eventID" class="ui-widget-content ui-corner-all multiRow">
 				</fieldset>
                 <!-- Allow form submission with keyboard without duplicating the dialog button -->

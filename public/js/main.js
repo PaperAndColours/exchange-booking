@@ -4,11 +4,11 @@ $(function() {
 	/**
 	* Save booking on server
 	*/
-			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event._resources}
+			//payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event._resources, "description": event.description};
 			$.ajax({
 			url: 'booking/',
 			type: 'POST',
-			data: JSON.stringify(payload),
+			data: JSON.stringify(event),
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
 			async: false,
@@ -23,7 +23,12 @@ $(function() {
 	/**
 	* Update booking on server
 	*/
-			payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources}
+			//payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources, "description": event.description};
+
+			payload = clone(event);
+			if (typeof payload._resources === "object") 		//It gets this if drag n drop
+				payload._resources = payload.resources[0];
+			delete payload["_id"];
 			$.ajax({
 			url: 'booking/'+event.id,
 			type: 'PUT',
@@ -107,16 +112,17 @@ $(function() {
 
 //----------Form creation and initialization----------------------
 	var dialog, form,
-		title = $("#title"),
 		client = $("#client"),
 		resources = $("#resources"),
 		allDay = $("#allDay"),
+		provisional = $("#provisional"),
 		startdate = $("#startdate"),
 		enddate = $("#enddate"),
 		starttime = $("#starttime"),
 		endtime = $("#endtime"),
 		eventID = $("#eventID"),
-		allFields = $([]).add(title).add(client).add(resources).add(allDay).add(startdate).add(enddate).add(starttime).add(endtime),
+		description = $("#description"),
+		allFields = $([]).add(client).add(resources).add(allDay).add(provisional).add(startdate).add(enddate).add(starttime).add(endtime).add(description),
 		tips = $(".validateTips"),
 
 		allDayChecked,
@@ -336,17 +342,21 @@ function createBookingDates() {
 	return returnObj;
 }
 
+	function addCustomEventInfo(event) {
+		bookingInfo = createBookingDates();
+		event.start = bookingInfo.start;
+		event.end = bookingInfo.end;
+		event.allDay = bookingInfo.allDayChecked;
+		event.client = client.val();
+		event.provisional = provisional.prop("checked");
+		event._resources = resources.val();
+		event.description = description.val();
+	}
+
 	function updateBooking() {
 		if (validateBookingForm()) {
-			bookingInfo = createBookingDates();
-			console.log(bookingInfo);
-			event = $("#calendar").fullCalendar('clientEvents', eventID.val())[0]
-			event.title = title.val();
-			event.start = bookingInfo.start;
-			event.end = bookingInfo.end;
-			event.allDay = bookingInfo.allDayChecked;
-			event.client = client.val();
-			event.resources = resources.val();
+			event = $("#calendar").fullCalendar('clientEvents', eventID.val())[0];
+			addCustomEventInfo(event);
 			sendUpdate(event);
 			$("#calendar").fullCalendar('updateEvent', event)
 			$('#calendar').fullCalendar('refetchEvents');
@@ -358,11 +368,9 @@ function createBookingDates() {
 
 	function addBooking() {
 		if (validateBookingForm()) {
-			bookingInfo = createBookingDates();
-			console.log(bookingInfo);
-
-			payload = {"title": title.val(), "start": bookingInfo.start, "end": bookingInfo.end, "allDay": bookingInfo.allDayChecked, "client": client.val(), "_resources" : resources.val()}
-			sendCreate(payload);
+			event = {};
+			addCustomEventInfo(event);
+			sendCreate(event);
 			
 			dialog.dialog("close");
 			return true;
@@ -403,14 +411,18 @@ function createBookingDates() {
 				enddate.datepicker("setDate", moment(data.end).format("DD MMMM YYYY"));
 			}
 
-			if (data.title != undefined)
-				title.val(data.title);
 			if (data.allDay != undefined)
 				allDay.prop("checked", data.allDay);
 			if (data.client != undefined)
 				client.val(data.client);
 			if (data.resources != undefined)
 				resources.val(data.resources);
+			if (data.description != undefined)
+				description.val(data.description);
+			if (data.provisional != undefined)
+				provisional.prop("checked", data.provisional);
+			else
+				description.val("");
 		}
 	}
 
@@ -453,5 +465,71 @@ function createBookingDates() {
 
 	$("#create-booking").button().on("click", function() {
 		createSaveDialog();
+	});
+});
+//---------Aux Methods-----------------
+function clone(obj) {
+    if(obj == null || typeof(obj) != 'object')
+        return obj;
+
+    var temp = {} // changed
+
+    for(var key in obj) {
+		temp[key] = obj[key];
+    }
+    return temp;
+}
+
+//---------Charge Table----------------
+$(document).ready(function() {
+
+function makeInputBox(name, value){
+	rtnStr = "<input id='"+name+"' name='"+name+"' type = 'text' value='"+value+"'>";
+	return rtnStr;
+}
+
+function makeHiddenBox(name, value){
+	rtnStr = "<input id='"+name+"' name='"+name+"' type = 'hidden' value='"+value+"'>";
+	return rtnStr;
+}
+
+function makeSelectBox(name, values, def) {
+	rtnStr = "<select id='"+name+"' name='"+name+"'>";
+	for (value in values) {
+		option = values[value];
+		selected = (option === def ? "selected = 'selected'" : "");
+		optionString = "<option value='"+option+"' "+selected+"> "+option +"</option>";
+		rtnStr += optionString;
+	}
+	rtnStr += "</select>"
+	return rtnStr;
+}
+function makeChargeRow(amount, selection, other, id) {
+	chargeRow = [
+			makeInputBox("amount-"+String(chargeRowCounter), amount),
+			makeSelectBox("type-"+String(chargeRowCounter), ["booking", "catering", "other"], selection),
+			makeInputBox("other-"+String(chargeRowCounter), other),
+			makeHiddenBox("id-"+String(chargeRowCounter), id)
+	];
+	chargeRowCounter += 1;
+	return chargeRow;
+}
+	var chargeRowCounter = 0;
+
+	var t = $('#charges').DataTable({
+		autowidth: false,
+		searching: false,
+		paging: false,
+		columnDefs:[
+			{
+				targets: [3],
+				visible: false
+			}
+		]
+	});
+
+	$('#addCharge').on('click', function(event) {
+		event.preventDefault();
+		t.row.add(makeChargeRow(200, "catering", "", "132if")).draw();
 	});
 });

@@ -6,12 +6,17 @@ var BookingSchema = new Schema({
 	start: {type: Date, required: true},
 	end: {type: Date, required: true},
 	allDay: {type: Boolean, required: true},
+	provisional: {type: Boolean, required: true},
 	description: {type: String, required: false },
 	_resources: { 
 		type: Schema.Types.ObjectId,
 		ref: 'Room',
 		required: true
-	}
+	},
+	charges: [{
+		type: Schema.Types.ObjectId,
+		ref: 'Charge',
+	}]
 });
 
 

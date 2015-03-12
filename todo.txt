@@ -13,24 +13,82 @@ It's clearing because there is a single property for "allDay" that doesn't take 
 It needs to be changed so that it also updates when a new event loads, to take into account the status of the individual event.
 Also, it could be a slightly more generic method. It can be invoked by addEvent, updateEvent, and allDay.click?
 Create a set of methods that can be used to turn on/off extra (or allday) date information when it's clicked)?
+DISABLE Allday & delete the becursed code which drove me here
+
++Time Length Issues
+-------------------
+Find out why display box is no longer showing length of time
+
+
++Tidy javascript file
+---------------------
+Create functions to manipulate dates
+Remove double entries of variables (in particular alldaychecked)
+Wrap floating code in document.ready function
+Streamline loading / saving functions and integrate with list of variables
+
 
 +Form Reflects Updated Model
 ----------------------------
 Make forms reflect the new updated model:
-	A way to add costs
-	!IN PROGRESS: A description textarea box
-	Make client the main heading.. -And remove the event title heading (Unless already fixed with a serverside virtual )
+	!DONE: 'provisional' checkbox
+		DONE: Add form element to html
+		DONE: Add value to back end
+		DONE: In javascript:
+			DONE: Update form references
+			DONE: Update save methods
+			DONE: Update load methods
 
-No double bookings
-------------------
-	-front end.. flag?
+	!IN PROGRESS:A way to add costs
+		!DONE:Create new bookingCharge model
+			DONE:Add fields: amount (currency)
+			DONE:Add field: type (enum: room cost, catering, other)
+			DONE:Add field: other[description]
+		DONE: Create field in booking model, for an array of charges
+		DONE: Update booking controller to populate with bookingcharges, also
+
+		DONE: Make sure charge model entry "type" is okay (changed to chargeType)
+		
+		DONE: Register new model (probably in config/mongoose)
+	
+		Update (booking / calendar?) controller to also return all the enum posibilities for bookingCharge
+
+		Figure out how to update bookingCharges when booking is updated
+			~Do I need to create a cross-link between booking and bookingCharge, to save it properly, when it is submitted? (Using the controllers?)
+			~Create a controller with CRUD?
+
+		!IN PROGRESS:Get DataTables Working
+			DONE: Use javascript to set options
+			DONE: Look at form example and copy over
+			DONE: Set hidden field
+			set class for each button type (to allow selection)
+			set greying out of buttons when non-other is selected (using http://datatables.net/reference/api/row%28%29.data%28%29)
+			
+
+		Load booking objects into list of form elements
+		Load booking charges into booking objects - Upon dialog load
+		Send booking charges to server, in some form, prob via ajax - Upon dialog save/update
+		
+		Style input width
+
+	!DONE: A description textarea box
+		DONE: Updated model
+		DONE: Update form
+		DONE: Update javascript to load values in/out of textarea (? i think)
+	!DONE: Make client the main heading.. -And remove the event title heading (Unless already fixed with a serverside virtual )
+		DONE: Remove title attribute from html form
+		DONE: Remove title from javascript as a separeate thing
 
 +Finances display
 -----------------
 Create a screen to display finances, with breakdowns
 Click on day in month view = select day
 
-Payload
++Calendar Navigation
+--------------------
+Make clicking on a day in the calendar jump straight to that day
+
+!DONE: Payload
 -------
 Change to using event object directly, to remove the need to list the variables separately
 
@@ -40,15 +98,16 @@ Make sure calendar reverts. when server operation not successful
 -Make sure update/save methods return success or failure
 Fix the bug outlined here: http://www.ikelin.com/fullcalendar-resource-day-view-bug/
 
-Front End Form Validation 
--------------------------
-	..Events don't overlap (Can i get calendar to do this for me?)
-
 Refresh
 -------
 Remove the need to refetch every time there is an update?
 
-Form UI 
+No double bookings 
+------------------
+	-front end.. flag?
+	..Events don't overlap (Can i get calendar to do this for me?)
+
+Form UI  (very optional)
 -------
 (Do I need all this? I've got form validation)
 	Make it impossible to select an end date before the start date
@@ -62,16 +121,13 @@ Form UI
 +Revise Booking model
 --------------------
 Each booking needs extra information:
-	1. Description field
-	2. Cost breakdown
-	3. Boolean for provisional? (Whether they have been confirmed with booking form)
+	1. DONE: Description field
+	2. !TANDEM IN PROGRESS: Cost breakdown
+	3. DONE: Boolean for provisional? (Whether they have been confirmed with booking form)
 
-And remove this field:
-	Title
+DONE: Remove Title
+DONE: create virtual for title to map to client
 
-Add cost for rooms
-
-Possibly create virtual for title to map to client
 Possibly rename _resources to monRooms, to make easier to comprehend.. 
 
 +Validation
@@ -132,3 +188,9 @@ Backup
 #(-More optional-)
 Client interface for web
 Export CSV - find out how difficult
+
+#========Optional Features===============
+Put in hourly rate, for rooms. This will be suggested as a value, but not directly saved
+Change provisional checkbox to enum thing
+Add confirmation dialog on delete
+Preferences to change things like: room screen, room charge, fee/charge types
