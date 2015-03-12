@@ -379,12 +379,16 @@ function createBookingDates() {
 
 //--------Form Creation-------------
 	function createUpdateDialog(data) {
+		dialog.dialog("option", "buttons", 
+			[dialogButtons[1], dialogButtons[2], dialogButtons[3]]);
 		createDialog(data)
 		if (data.id !== undefined){
 			eventID.val(data.id);
-		};
+		}
 	}
 	function createSaveDialog(data) {
+		dialog.dialog("option", "buttons", 
+			[dialogButtons[0], dialogButtons[3]]);
 		createDialog(data)
 	}
 	function createDialog(data) {
@@ -410,21 +414,33 @@ function createBookingDates() {
 		}
 	}
 
+	dialogButtons = [
+		{
+			text: "Save Booking",
+			click: addBooking
+		},
+		{
+			text: "Update Booking",
+			click: updateBooking
+		},
+		{
+			text: "Delete Booking",
+			click: deleteBooking
+		},
+		{
+			text: "Cancel",
+			click: function() {
+				dialog.dialog("close");
+			}
+		}
+	];
+
 	dialog = $("#dialog-form").dialog({
-		//TODO: Hide buttons using page 
-		//http://api.jqueryui.com/dialog/#option-buttons
 		autoOpen: false,
 		height: 500,
 		width: 350,
 		modal: true,
-		buttons: {
-			"Save Booking": addBooking,
-			"Update Booking": updateBooking,
-			"Delete Booking": deleteBooking,
-			Cancel: function() {
-				dialog.dialog("close");
-			}
-		},
+		buttons: dialogButtons,
 		close: function() {
 			form[0].reset();
 			allFields.removeClass("ui-state-error");

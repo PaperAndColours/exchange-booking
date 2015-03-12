@@ -5,13 +5,10 @@ Make sure all of the functionality is working okay
 	Document javascript
 
 #===Front end=================
-+jQuery Dialog: 1 Button
+Done: +jQuery Dialog: 1 Button
 -----------------------
-Make sure only relevant update/save button is showing - not both
+Make sure only relevant update+delete Or save button is showing - not both
 
-+Delete Button
-------------
-Add Delete button to dialogue
 
 +Hidden ID
 ---------
