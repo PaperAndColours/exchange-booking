@@ -5,12 +5,7 @@ Make sure all of the functionality is working okay
 	Document javascript
 
 #===Front end=================
-Done: +jQuery Dialog: 1 Button
------------------------
-Make sure only relevant update+delete Or save button is showing - not both
-
-
-+Hidden ID
+DONE: +Hidden ID
 ---------
 Make ID into a hidden form, rather than text area
 
