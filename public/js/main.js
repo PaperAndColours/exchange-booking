@@ -351,6 +351,7 @@ function createBookingDates() {
 		event.provisional = provisional.prop("checked");
 		event._resources = resources.val();
 		event.description = description.val();
+		event.charges = getTableData();
 	}
 
 	function updateBooking() {
@@ -466,7 +467,6 @@ function createBookingDates() {
 	$("#create-booking").button().on("click", function() {
 		createSaveDialog();
 	});
-});
 //---------Aux Methods-----------------
 function clone(obj) {
     if(obj == null || typeof(obj) != 'object')
@@ -481,20 +481,17 @@ function clone(obj) {
 }
 
 //---------Charge Table----------------
-$(document).ready(function() {
 
-function makeInputBox(name, value){
-	rtnStr = "<input id='"+name+"' name='"+name+"' type = 'text' value='"+value+"'>";
+function makeInputBox(name, value, type, cssClass){
+	cssClass = cssClass !== undefined ? "class = '" + cssClass +"'" : "";
+	rtnStr = "<input id='"+name+"' name='"+name+"' " + cssClass +" type = '"+type+"' value='"+value+"'>";
 	return rtnStr;
 }
 
-function makeHiddenBox(name, value){
-	rtnStr = "<input id='"+name+"' name='"+name+"' type = 'hidden' value='"+value+"'>";
-	return rtnStr;
-}
 
-function makeSelectBox(name, values, def) {
-	rtnStr = "<select id='"+name+"' name='"+name+"'>";
+function makeSelectBox(name, values, def, cssClass) {
+	cssClass = cssClass !== undefined ? "class = '" + cssClass +"'" : "";
+	rtnStr = "<select id='"+name+"' name='"+name+"' " + cssClass + " >";
 	for (value in values) {
 		option = values[value];
 		selected = (option === def ? "selected = 'selected'" : "");
@@ -506,10 +503,10 @@ function makeSelectBox(name, values, def) {
 }
 function makeChargeRow(amount, selection, other, id) {
 	chargeRow = [
-			makeInputBox("amount-"+String(chargeRowCounter), amount),
-			makeSelectBox("type-"+String(chargeRowCounter), ["booking", "catering", "other"], selection),
-			makeInputBox("other-"+String(chargeRowCounter), other),
-			makeHiddenBox("id-"+String(chargeRowCounter), id)
+			makeInputBox("amount-"+String(chargeRowCounter), amount, "text", "chargeAmount"),
+			makeSelectBox("type-"+String(chargeRowCounter), ["booking", "catering", "other"], selection, "chargeType"),
+			makeInputBox("other-"+String(chargeRowCounter), other, "text", "chargeOtherType"),
+			makeInputBox("id-"+String(chargeRowCounter), id, "hidden", "chargeID")
 	];
 	chargeRowCounter += 1;
 	return chargeRow;
@@ -523,13 +520,55 @@ function makeChargeRow(amount, selection, other, id) {
 		columnDefs:[
 			{
 				targets: [3],
-				visible: false
+				//visible: false
+				orderable: false
 			}
-		]
+		],
+		"createdRow": function(row, data, dataIndex) {
+			if ($(row).find('.chargeType').val() === "other") 
+				$(row).find('.chargeOtherType').attr('disabled', false);
+			else
+				$(row).find('.chargeOtherType').attr('disabled', true);
+
+			$(row).find('.chargeType').on('change', function(event) {
+				if ($(this).val() === "other") 
+					$(this).parent().parent().find('.chargeOtherType').attr('disabled', false);
+				else
+					$(this).parent().parent().find('.chargeOtherType').attr('disabled', true);
+					
+			});
+		}
+	
 	});
+
+function getTableData() {
+	rowCount = t.rows().indexes().length;
+	data = [];
+	for (var i=0; i<rowCount; i++) {
+		charge = {};
+		charge.amount = t.row(i).nodes().to$().find('.chargeAmount').val();
+		charge.chargeType = t.row(i).nodes().to$().find('.chargeType').val();
+		charge.otherDesc = t.row(i).nodes().to$().find('.chargeOtherType').val();
+		charge.id = t.row(i).nodes().to$().find('.chargeID').val();
+		data.push(charge);
+	}
+	return data;
+}
+
+function loadTable(dataSets) {
+	t.clear();
+	for (dataSet in dataSets) {
+		chargeRow = makeChargeRow(dataSet[0], dataSet[1], dataSet[2], dataSet[3]);
+		t.row.add(chargeRow);
+	}
+	t.draw();
+}
 
 	$('#addCharge').on('click', function(event) {
 		event.preventDefault();
-		t.row.add(makeChargeRow(200, "catering", "", "132if")).draw();
+		chargeRow = makeChargeRow(200, "booking", "", "132if")
+		console.log(chargeRow);
+		t.row.add(chargeRow).draw();
+		console.log(getTableData());
 	});
 });

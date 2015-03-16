@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 var ChargeSchema = new Schema({
 	amount: {type: Number},
-    chargeType: {type: String, enum: ['Booking', 'Catering', 'Other'], required: true},
+    chargeType: {type: String, enum: ['booking', 'catering', 'other'], required: true},
     otherDesc: {type: String}
 });
 
