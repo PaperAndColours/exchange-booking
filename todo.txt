@@ -5,7 +5,7 @@ Confirmation box comes on event/fee delete
 
 +Charges
 --------
-Add support for currency
+DONE: Add support for currency
 
 Types of charge enum
 --------------------

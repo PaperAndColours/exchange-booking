@@ -471,6 +471,7 @@ $(document).ready(function () {
 				}
 			],
 			"createdRow": function(row, data, dataIndex) {
+				$(row).find('.chargeAmount').autoNumeric('init', {aSign: "£"});
 				otherField = $(row).find('.chargeOtherType');
 				if ($(row).find('.chargeType').val() === "other") 
 					otherField.show();
@@ -484,6 +485,12 @@ $(document).ready(function () {
 					else
 						otherField.hide();
 						
+				});
+				$(row).find('.chargeDelete').on('click', function(event) {
+					event.preventDefault();
+					$(row).find('.chargeAmount').autoNumeric('destroy');
+					t.row(row).remove();
+					t.draw();
 				});
 			}
 		});
@@ -519,9 +526,7 @@ $(document).ready(function () {
 	$('#addCharge').on('click', function(event) {
 		event.preventDefault();
 		chargeRow = makeChargeRow(0, "booking", "", "")
-		console.log(chargeRow);
 		t.row.add(chargeRow).draw();
-		console.log(getTableData());
 	});
 
 }); 

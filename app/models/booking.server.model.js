@@ -1,11 +1,25 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
+require('mongoose-currency').loadType(mongoose);
+Currency = mongoose.Types.Currency;
+
 var ChargeSchema = new Schema({
-	amount: {type: Number},
+	rawAmount: {type: Currency,	min: 0},
     chargeType: {type: String, enum: ['booking', 'catering', 'other'], required: true},
     otherDesc: {type: String}
 });
+
+ChargeSchema.virtual('amount').get(function() {
+	return (this.rawAmount/100).toFixed(2);
+});
+
+ChargeSchema.virtual('amount').set(function(value) {
+	return this.rawAmount = value;
+});
+
+ChargeSchema.set('toObject', { virtuals: true, setters: true, getters: true });
+ChargeSchema.set('toJSON', { virtuals: true, setters: true, getters: true });
 
 var BookingSchema = new Schema({
 	client: {type: String, required: true},
@@ -37,5 +51,6 @@ BookingSchema.virtual('backgroundColor').get(function() {
 	return this._resources.className;
 });
 
-BookingSchema.set('toJSON', { virtuals: true});
+BookingSchema.set('toObject', { getters: true, virtuals: true});
+BookingSchema.set('toJSON', { getters: true, virtuals: true});
 mongoose.model('Booking', BookingSchema);
