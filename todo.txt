@@ -55,7 +55,6 @@ Make forms reflect the new updated model:
 		
 		DONE: Register new model (probably in config/mongoose)
 	
-		Update (booking / calendar?) controller to also return all the enum posibilities for bookingCharge
 
 		Figure out how to update bookingCharges when booking is updated
 		ANSWER:
@@ -65,7 +64,12 @@ Make forms reflect the new updated model:
 
 		!IN PROGRESS: Update booking / charge models simultaneously
 			DONE: Charge models added when booking is added
-			Charge models updated/added when booking is updated
+			Charge models updated/added/deleted when booking is updated
+				If a fee is new, create one
+				If a fee is existing, update one
+				Check all fees, if one is missing, delete one
+			Charge models deleted when booking is deleted
+			Charge controller to also return all the enum posibilities for bookingCharge
 
 		!IN PROGRESS:Get DataTables Working
 			DONE: Use javascript to set options
@@ -74,13 +78,18 @@ Make forms reflect the new updated model:
 			DONE: set class for each button type (to allow selection)
 			DONE: set greying out of buttons when non-other is selected (using http://datatables.net/reference/api/row%28%29.data%28%29)
 			DONE: Created methods to create/populate table & get data from table
+			Load charge objects when booking object is clicked (call the relevant method - the data is already there) 
 			Add validation for rows of data
+			Add delete button for rows of data
+		
+			Add support for currency
 
-			Load charge objects when booking object is clicked (call the relevant method - the data is already there)
-			
-			Load booking objects into list of form elements
 			Style input width
+			Take chargeType options from charge controller posibilites ajax call
 
+	Set default values for newly created form
+		When no current data is available, reset to blanks & intelligent dates
+		
 	!DONE: A description textarea box
 		DONE: Updated model
 		DONE: Update form

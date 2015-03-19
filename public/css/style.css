@@ -28,3 +28,15 @@ background-color: orange;
 .gray {
 background-color: gray;
 }
+
+
+.chargeAmount {
+	width: 40px;
+}
+
+.chargeType {
+}
+
+.chargeOtherType {
+	width: 80px;
+}

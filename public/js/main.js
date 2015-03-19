@@ -420,10 +420,15 @@ function createBookingDates() {
 				resources.val(data.resources);
 			if (data.description != undefined)
 				description.val(data.description);
-			if (data.provisional != undefined)
-				provisional.prop("checked", data.provisional);
 			else
 				description.val("");
+			if (data.provisional != undefined)
+				provisional.prop("checked", data.provisional);
+			if (data.charges !== undefined) 
+				loadTable(data.charges);
+			else 
+				clearTable();
+			
 		}
 	}
 
@@ -557,16 +562,21 @@ function getTableData() {
 
 function loadTable(dataSets) {
 	t.clear();
-	for (dataSet in dataSets) {
-		chargeRow = makeChargeRow(dataSet[0], dataSet[1], dataSet[2], dataSet[3]);
+	for (idx in dataSets) {
+		charge = dataSets[idx];
+		chargeRow = makeChargeRow(charge.amount, charge.chargeType, charge.otherDesc, charge.id);
 		t.row.add(chargeRow);
 	}
+	t.draw();
+}
+function clearTable() {
+	t.clear();
 	t.draw();
 }
 
 	$('#addCharge').on('click', function(event) {
 		event.preventDefault();
-		chargeRow = makeChargeRow(200, "booking", "", "132if")
+		chargeRow = makeChargeRow(0, "booking", "", "")
 		console.log(chargeRow);
 		t.row.add(chargeRow).draw();
 		console.log(getTableData());
