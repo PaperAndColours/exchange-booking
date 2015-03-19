@@ -1,19 +1,7 @@
-+Update/Save
------------
-Make sure all of the functionality is working okay
-	Just browse through, make sure it is okay.. refresh knowledge of the code, the different methods
-	Document javascript
-
 #===Front end=================
 +AllDay Issues
 ------------
-Find out why dialog is clearing when all day event is checked
-It's clearing because there is a single property for "allDay" that doesn't take specific events into account, i don't think.
-
-It needs to be changed so that it also updates when a new event loads, to take into account the status of the individual event.
-Also, it could be a slightly more generic method. It can be invoked by addEvent, updateEvent, and allDay.click?
-Create a set of methods that can be used to turn on/off extra (or allday) date information when it's clicked)?
-DISABLE Allday & delete the becursed code which drove me here
+DONE: Deleted allday
 
 +Confirmation upon delete
 -------------------------
@@ -21,95 +9,39 @@ Make sure confirmation box comes on event/fee delete
 
 +Time Length Issues
 -------------------
-Find out why display box is no longer showing length of time
+DONE: Fixed by adding it in when the form is loaded
 
 
 +Tidy javascript file
 ---------------------
 Create functions to manipulate dates
-Remove double entries of variables (in particular alldaychecked)
-Wrap floating code in document.ready function
-Streamline loading / saving functions and integrate with list of variables
 
 
-+Form Reflects Updated Model
-----------------------------
-Make forms reflect the new updated model:
-	!DONE: 'provisional' checkbox
-		DONE: Add form element to html
-		DONE: Add value to back end
-		DONE: In javascript:
-			DONE: Update form references
-			DONE: Update save methods
-			DONE: Update load methods
++Charges
+--------
+	!DONE:A way to add costs
+		DONE: Make it work in the end using subdocuments
+			
+	Charge controller to also return all the enum posibilities for bookingCharge
+	Take chargeType options from charge controller posibilites ajax call
 
-	!IN PROGRESS:A way to add costs
-		!DONE:Create new bookingCharge model
-			DONE:Add fields: amount (currency)
-			DONE:Add field: type (enum: room cost, catering, other)
-			DONE:Add field: other[description]
-		DONE: Create field in booking model, for an array of charges
-		DONE: Update booking controller to populate with bookingcharges, also
+	!IN PROGRESS:Get DataTables Working
+		Add support for currency
+		Add validation for rows of data
+		DONE:Add delete button for rows of data
 
-		DONE: Make sure charge model entry "type" is okay (changed to chargeType)
-		
-		DONE: Register new model (probably in config/mongoose)
-	
-
-		Figure out how to update bookingCharges when booking is updated
-		ANSWER:
-			Use mongoose findOneAndUpdate to actually update the model (with upsert = true)
-			Go into the booking controller, and manipulate the model from there
-			Using the method outlined here http://stackoverflow.com/questions/27260162/how-to-save-multiple-refs-to-other-documents-in-mongodb-using-mongoose 
-
-		!IN PROGRESS: Update booking / charge models simultaneously
-			DONE: Charge models added when booking is added
-			Charge models updated/added/deleted when booking is updated
-				If a fee is new, create one
-				If a fee is existing, update one
-				Check all fees, if one is missing, delete one
-			Charge models deleted when booking is deleted
-			Charge controller to also return all the enum posibilities for bookingCharge
-
-		!IN PROGRESS:Get DataTables Working
-			DONE: Use javascript to set options
-			DONE: Look at form example and copy over
-			DONE: Set hidden field
-			DONE: set class for each button type (to allow selection)
-			DONE: set greying out of buttons when non-other is selected (using http://datatables.net/reference/api/row%28%29.data%28%29)
-			DONE: Created methods to create/populate table & get data from table
-			Load charge objects when booking object is clicked (call the relevant method - the data is already there) 
-			Add validation for rows of data
-			Add delete button for rows of data
-		
-			Add support for currency
-
-			Style input width
-			Take chargeType options from charge controller posibilites ajax call
+		DONE: Style input width
 
 	Set default values for newly created form
 		When no current data is available, reset to blanks & intelligent dates
 		
-	!DONE: A description textarea box
-		DONE: Updated model
-		DONE: Update form
-		DONE: Update javascript to load values in/out of textarea (? i think)
-	!DONE: Make client the main heading.. -And remove the event title heading (Unless already fixed with a serverside virtual )
-		DONE: Remove title attribute from html form
-		DONE: Remove title from javascript as a separeate thing
-
 +Finances display
 -----------------
 Create a screen to display finances, with breakdowns
-Click on day in month view = select day
 
 +Calendar Navigation
 --------------------
 Make clicking on a day in the calendar jump straight to that day
-
-!DONE: Payload
--------
-Change to using event object directly, to remove the need to list the variables separately
 
 +Revert
 ------
@@ -141,11 +73,9 @@ Form UI  (very optional)
 --------------------
 Each booking needs extra information:
 	1. DONE: Description field
-	2. !TANDEM IN PROGRESS: Cost breakdown
+	2. DONE: Cost breakdown
 	3. DONE: Boolean for provisional? (Whether they have been confirmed with booking form)
 
-DONE: Remove Title
-DONE: create virtual for title to map to client
 
 Possibly rename _resources to monRooms, to make easier to comprehend.. 
 
@@ -181,6 +111,7 @@ Separate box to add info
 Change white room from grey to white
 
 Sort out/tidy up css classes
+Get rid of coloured columns when a different day is selected
 
 #=======Server===================
 +Heroku
@@ -213,3 +144,4 @@ Put in hourly rate, for rooms. This will be suggested as a value, but not direct
 Change provisional checkbox to enum thing
 Add confirmation dialog on delete
 Preferences to change things like: room screen, room charge, fee/charge types
+Document javascript front end file

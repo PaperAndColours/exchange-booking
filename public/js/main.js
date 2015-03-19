@@ -1,10 +1,11 @@
-$(function() {
+	//TODO: Check date format, make sure there is a consistent protocol
+	//Even develop a couple of functions for them
+$(document).ready(function () {
 //---------Calendar Functions-----------
 	function sendCreate(event) {
 	/**
 	* Save booking on server
 	*/
-			//payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event._resources, "description": event.description};
 			$.ajax({
 			url: 'booking/',
 			type: 'POST',
@@ -23,8 +24,6 @@ $(function() {
 	/**
 	* Update booking on server
 	*/
-			//payload = {"title": event.title, "start": event.start, "end": event.end, "allDay": event.allDay, "client": event.client, "_resources" : event.resources, "description": event.description};
-
 			payload = clone(event);
 			if (typeof payload._resources === "object") 		//It gets this if drag n drop
 				payload._resources = payload.resources[0];
@@ -57,7 +56,6 @@ $(function() {
 			});
 	}
 //------------Calendar---------------
-    $(document).ready(function () {
 	/*
 	* Set up fullcalendar using fullcalendar functionality
 	* See http://fullcalendar.io for info
@@ -77,12 +75,7 @@ $(function() {
         editable: true,
         droppable: true,
         resources: 'rooms',
-        resourceFilter: function (resource) {
-          var active = $("input").map(function(){
-            return this.checked ? this.name : null;
-          }).get();
-          return $.inArray(resource.id, active) > -1;
-        },
+		height: $(window).height()*.9,
         events: 'booking',
         // the 'ev' parameter is the mouse event rather than the resource 'event'
         // the ev.data is the resource column clicked upon
@@ -108,13 +101,11 @@ $(function() {
       $('input:checkbox').change(function(){
         $('#calendar').fullCalendar('render');
       });
-    });
 
 //----------Form creation and initialization----------------------
 	var dialog, form,
 		client = $("#client"),
 		resources = $("#resources"),
-		allDay = $("#allDay"),
 		provisional = $("#provisional"),
 		startdate = $("#startdate"),
 		enddate = $("#enddate"),
@@ -122,12 +113,37 @@ $(function() {
 		endtime = $("#endtime"),
 		eventID = $("#eventID"),
 		description = $("#description"),
-		allFields = $([]).add(client).add(resources).add(allDay).add(provisional).add(startdate).add(enddate).add(starttime).add(endtime).add(description),
-		tips = $(".validateTips"),
+		allFields = $([]).add(client).add(resources).add(provisional).add(startdate).add(enddate).add(starttime).add(endtime).add(description),
+		tips = $(".validateTips");
 
-		allDayChecked,
-		tempStart,
-		tempEnd;
+	startdate.datepicker({
+		dateFormat : "dd MM yy",
+		setDate : Date.now()
+	});
+	enddate.datepicker({
+		dateFormat : "dd MM yy",
+		setDate : Date.now()
+	});
+
+	//Make the time display work
+	createStartTime();
+	createEndTime();
+
+	starttime.on('change', function() {
+		updateEndRange();
+	 });
+	startdate.on('change', function() {
+		if (datesEqual()) 
+			updateEndRange()
+		else 
+			removeEndRange()
+	});
+	enddate.on('change', function() {
+		if (datesEqual()) 
+			updateEndRange()
+		else 
+			removeEndRange()
+	});
 
 	function createStartTime() {
      starttime.timepicker({
@@ -142,11 +158,12 @@ $(function() {
 		});
 	}
 	function removeEndRange() {
-			endtime.timepicker('option', 'minTime', "7:00am");
-			endtime.timepicker('option', 'showDuration', false);
+		endtime.timepicker('option', 'minTime', "7:00am");
+		endtime.timepicker('option', 'showDuration', false);
 	}
 
-	function updateEndRange(beginValue) {
+	function updateEndRange() {
+		beginValue = starttime.val();
 		if (beginValue !== undefined && datesEqual()){
 			bookingTime = moment(beginValue, "hh:mma")
 			minStep = moment.duration(30, "minutes")
@@ -162,65 +179,6 @@ $(function() {
 		return startdate.datepicker('getDate').toString() == enddate.datepicker('getDate').toString();
 	}
 
-	allDay.on('click', function() {
-		prepareAllDay();
-	})
-	function prepareAllDay() {
-	 	allDayChecked = allDay.prop('checked');
-		if (allDayChecked) {
-			 tempStart = starttime.timepicker('getTime');
-			 starttime.timepicker('remove');
-			 starttime.val("All Day")
-			 starttime.prop('disabled', true);
-
-			 tempEnd = endtime.timepicker('getTime');
-			 endtime.timepicker('remove');
-			 endtime.val("All Day")
-			 endtime.prop('disabled', true);
-		}
-		else {
-			 starttime.prop('disabled', false);
-			 createStartTime();
-			 starttime.timepicker('setTime', tempStart);
-
-			 endtime.prop('disabled', false);
-			 createEndTime();
-			 endtime.timepicker('setTime', tempEnd);
-			 updateEndRange(starttime.val())
-		}
-	};
-
-	startdate.datepicker({
-		dateFormat : "dd MM yy",
-		setDate : Date.now()
-	});
-	enddate.datepicker({
-		dateFormat : "dd MM yy",
-		setDate : Date.now()
-	});
-
-	//TODO:Wrap this stuff into a function, or on document load
-	startdate.datepicker("setDate", Date.now());
-	enddate.datepicker("setDate", Date.now());
-
-	createStartTime();
-	createEndTime();
-
-	 starttime.on('change', function() {
-		updateEndRange($(this).val());
-	 });
-	startdate.on('change', function() {
-	    if (!allDayChecked) {
-			if (datesEqual()) updateEndRange(starttime.val())
-			else removeEndRange()
-		}
-	});
-	enddate.on('change', function() {
-	    if (!allDayChecked) {
-			if (datesEqual()) updateEndRange(starttime.val())
-			else removeEndRange()
-		}
-	});
 
 
 //-----Form validation-----------------------
@@ -285,7 +243,7 @@ $(function() {
 			return true;
 		}
 	}
-function datesChronological(o1, o2, n) {
+	function datesChronological(o1, o2, n) {
 		dateA = moment(o1.datepicker("getDate"));
 		dateB = moment(o2.datepicker("getDate"));
 		if (!dateB.isAfter(dateA) && !dateB.isSame(dateA))	{
@@ -306,47 +264,28 @@ function datesChronological(o1, o2, n) {
 		valid = valid && checkDate(enddate, "Must be a valid date");
 
 		valid = valid && datesChronological(startdate, enddate, "End date must be after or same as Start date");
-		if (!$("#allDay").prop('checked')){
-			valid = valid && checkTime(starttime, "Must be a valid time");
-			valid = valid && checkTime(endtime, "Must be a valid time");
-			if(datesEqual()){
-				valid = valid && timesChronological(starttime, endtime, "End time must be after start time!")
-			}
-		}
+		valid = valid && checkTime(starttime, "Must be a valid time");
+		valid = valid && checkTime(endtime, "Must be a valid time");
+		if(datesEqual())
+			valid = valid && timesChronological(starttime, endtime, "End time must be after start time!")
 	return valid;
 	}
 
 //-----Form Submission-----------------
-function createBookingDates() {
-		//TODO: Make sure all variables for each form property only have 1 definition, not multiple ones
-		var allDayChecked = $("#allDay").prop('checked');
-		if (!allDayChecked){
-		//TODO: Check date format, make sure there is a consistent protocol
-		//Even develop a couple of functions for them
-			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(starttime.timepicker("getTime")).format("hh:mm a");
-			end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(endtime.timepicker("getTime")).format("hh:mm a");
-		}
-		else {
-			start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY");
-			end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY");
-		}
-			start = moment(start, "DD/MM/YYYY hh:mm a").toDate();
-			end = moment(end, "DD/MM/YYYY hh:mm a").toDate();
+	function createBookingDates() {
+		returnObj = [];
+		start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(starttime.timepicker("getTime")).format("hh:mm a");
+		end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(endtime.timepicker("getTime")).format("hh:mm a");
+		returnObj.start = moment(start, "DD/MM/YYYY hh:mm a").toDate();
+		returnObj.end = moment(end, "DD/MM/YYYY hh:mm a").toDate();
 
-	console.log(start);
-	console.log(end);
-	returnObj = [];
-	returnObj.start = start;
-	returnObj.end = end;
-	returnObj.allDayChecked = allDayChecked;
-	return returnObj;
-}
+		return returnObj;
+	}
 
 	function addCustomEventInfo(event) {
 		bookingInfo = createBookingDates();
 		event.start = bookingInfo.start;
 		event.end = bookingInfo.end;
-		event.allDay = bookingInfo.allDayChecked;
 		event.client = client.val();
 		event.provisional = provisional.prop("checked");
 		event._resources = resources.val();
@@ -411,9 +350,7 @@ function createBookingDates() {
 				endtime.timepicker("setTime", moment(data.end).format("hh:mm a"));
 				enddate.datepicker("setDate", moment(data.end).format("DD MMMM YYYY"));
 			}
-
-			if (data.allDay != undefined)
-				allDay.prop("checked", data.allDay);
+			updateEndRange(); //makes the end time selector show time if relevant
 			if (data.client != undefined)
 				client.val(data.client);
 			if (data.resources != undefined)
@@ -428,7 +365,6 @@ function createBookingDates() {
 				loadTable(data.charges);
 			else 
 				clearTable();
-			
 		}
 	}
 
@@ -455,8 +391,8 @@ function createBookingDates() {
 
 	dialog = $("#dialog-form").dialog({
 		autoOpen: false,
-		height: 500,
-		width: 350,
+		height: $(window).height()*.9,
+		width: 450,
 		modal: true,
 		buttons: dialogButtons,
 		close: function() {
@@ -473,106 +409,112 @@ function createBookingDates() {
 		createSaveDialog();
 	});
 //---------Aux Methods-----------------
-function clone(obj) {
-    if(obj == null || typeof(obj) != 'object')
-        return obj;
+	function clone(obj) {
+		if(obj == null || typeof(obj) != 'object')
+			return obj;
 
-    var temp = {} // changed
+		var temp = {} // changed
 
-    for(var key in obj) {
-		temp[key] = obj[key];
-    }
-    return temp;
-}
+		for(var key in obj) {
+			temp[key] = obj[key];
+		}
+		return temp;
+	}
 
 //---------Charge Table----------------
 
-function makeInputBox(name, value, type, cssClass){
-	cssClass = cssClass !== undefined ? "class = '" + cssClass +"'" : "";
-	rtnStr = "<input id='"+name+"' name='"+name+"' " + cssClass +" type = '"+type+"' value='"+value+"'>";
-	return rtnStr;
-}
-
-
-function makeSelectBox(name, values, def, cssClass) {
-	cssClass = cssClass !== undefined ? "class = '" + cssClass +"'" : "";
-	rtnStr = "<select id='"+name+"' name='"+name+"' " + cssClass + " >";
-	for (value in values) {
-		option = values[value];
-		selected = (option === def ? "selected = 'selected'" : "");
-		optionString = "<option value='"+option+"' "+selected+"> "+option +"</option>";
-		rtnStr += optionString;
+	function makeInputBox(name, value, type, cssClass){
+		cssClass = cssClass !== undefined ? "class = '" + cssClass +"'" : "";
+		rtnStr = "<input id='"+name+"' name='"+name+"' " + cssClass +" type = '"+type+"' value='"+value+"'>";
+		return rtnStr;
 	}
-	rtnStr += "</select>"
-	return rtnStr;
-}
-function makeChargeRow(amount, selection, other, id) {
-	chargeRow = [
-			makeInputBox("amount-"+String(chargeRowCounter), amount, "text", "chargeAmount"),
-			makeSelectBox("type-"+String(chargeRowCounter), ["booking", "catering", "other"], selection, "chargeType"),
-			makeInputBox("other-"+String(chargeRowCounter), other, "text", "chargeOtherType"),
-			makeInputBox("id-"+String(chargeRowCounter), id, "hidden", "chargeID")
-	];
-	chargeRowCounter += 1;
-	return chargeRow;
-}
-	var chargeRowCounter = 0;
 
-	var t = $('#charges').DataTable({
-		autowidth: false,
-		searching: false,
-		paging: false,
-		columnDefs:[
-			{
-				targets: [3],
-				//visible: false
-				orderable: false
-			}
-		],
-		"createdRow": function(row, data, dataIndex) {
-			if ($(row).find('.chargeType').val() === "other") 
-				$(row).find('.chargeOtherType').attr('disabled', false);
-			else
-				$(row).find('.chargeOtherType').attr('disabled', true);
+	function makeDeleteButton(){
+		rtnStr = "<button class='chargeDelete'> Delete </button>"
+		return rtnStr;
+	}
 
-			$(row).find('.chargeType').on('change', function(event) {
-				if ($(this).val() === "other") 
-					$(this).parent().parent().find('.chargeOtherType').attr('disabled', false);
-				else
-					$(this).parent().parent().find('.chargeOtherType').attr('disabled', true);
-					
-			});
+	function makeSelectBox(name, values, def, cssClass) {
+		cssClass = cssClass !== undefined ? "class = '" + cssClass +"'" : "";
+		rtnStr = "<select id='"+name+"' name='"+name+"' " + cssClass + " >";
+		for (value in values) {
+			option = values[value];
+			selected = (option === def ? "selected = 'selected'" : "");
+			optionString = "<option value='"+option+"' "+selected+"> "+option +"</option>";
+			rtnStr += optionString;
 		}
-	
-	});
-
-function getTableData() {
-	rowCount = t.rows().indexes().length;
-	data = [];
-	for (var i=0; i<rowCount; i++) {
-		charge = {};
-		charge.amount = t.row(i).nodes().to$().find('.chargeAmount').val();
-		charge.chargeType = t.row(i).nodes().to$().find('.chargeType').val();
-		charge.otherDesc = t.row(i).nodes().to$().find('.chargeOtherType').val();
-		charge.id = t.row(i).nodes().to$().find('.chargeID').val();
-		data.push(charge);
+		rtnStr += "</select>"
+		return rtnStr;
 	}
-	return data;
-}
-
-function loadTable(dataSets) {
-	t.clear();
-	for (idx in dataSets) {
-		charge = dataSets[idx];
-		chargeRow = makeChargeRow(charge.amount, charge.chargeType, charge.otherDesc, charge.id);
-		t.row.add(chargeRow);
+	function makeChargeRow(amount, selection, other, id) {
+		chargeRow = [
+				makeInputBox("amount-"+String(chargeRowCounter), amount, "text", "chargeAmount"),
+				makeSelectBox("type-"+String(chargeRowCounter), ["booking", "catering", "other"], selection, "chargeType"),
+				makeInputBox("other-"+String(chargeRowCounter), other, "text", "chargeOtherType"),
+				makeDeleteButton(),
+				makeInputBox("id-"+String(chargeRowCounter), id, "hidden", "chargeID")
+		];
+		chargeRowCounter += 1;
+		return chargeRow;
 	}
-	t.draw();
-}
-function clearTable() {
-	t.clear();
-	t.draw();
-}
+		var chargeRowCounter = 0;
+
+		var t = $('#charges').DataTable({
+			autowidth: false,
+			searching: false,
+			paging: false,
+			columnDefs:[
+				{
+					targets: [3],
+					//visible: false
+					orderable: false
+				}
+			],
+			"createdRow": function(row, data, dataIndex) {
+				otherField = $(row).find('.chargeOtherType');
+				if ($(row).find('.chargeType').val() === "other") 
+					otherField.show();
+				else 
+					otherField.hide();
+
+				$(row).find('.chargeType').on('change', function(event) {
+					otherField = $(this).parent().parent().find('.chargeOtherType');
+					if ($(this).val() === "other")
+						otherField.show();
+					else
+						otherField.hide();
+						
+				});
+			}
+		});
+
+	function getTableData() {
+		rowCount = t.rows().indexes().length;
+		data = [];
+		for (var i=0; i<rowCount; i++) {
+			charge = {};
+			charge.amount = t.row(i).nodes().to$().find('.chargeAmount').val();
+			charge.chargeType = t.row(i).nodes().to$().find('.chargeType').val();
+			charge.otherDesc = t.row(i).nodes().to$().find('.chargeOtherType').val();
+			charge.id = t.row(i).nodes().to$().find('.chargeID').val();
+			data.push(charge);
+		}
+		return data;
+	}
+
+	function loadTable(dataSets) {
+		t.clear();
+		for (idx in dataSets) {
+			charge = dataSets[idx];
+			chargeRow = makeChargeRow(charge.amount, charge.chargeType, charge.otherDesc, charge.id);
+			t.row.add(chargeRow);
+		}
+		t.draw();
+	}
+	function clearTable() {
+		t.clear();
+		t.draw();
+	}
 
 	$('#addCharge').on('click', function(event) {
 		event.preventDefault();
@@ -581,4 +523,5 @@ function clearTable() {
 		t.row.add(chargeRow).draw();
 		console.log(getTableData());
 	});
-});
+
+}); 

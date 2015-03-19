@@ -19,7 +19,6 @@
   <script src="/js/main.js"></script>
 </head>
 <body>
-    <button id="create-booking">Create new booking</button>
 <div id='calendar'></div>
 
     <div id="dialog-form" title="Create new user">
@@ -38,8 +37,6 @@
 						<% } %>
 				</select>
 				<fieldset>  <!-- Time Info-->
-				<label for="allDay" class="ownRow"> Full Day Event? </label>
-				<input type="checkbox" id="allDay" class="ownRow">
 				<label for="startdate" class="ownRow">Start</label>
 				<input type="text" id="startdate" class="ui-widget-content ui-corner-all multiRow">
 				<input id="starttime" class="ui-widget-content ui-corner-all multiRow">
@@ -55,7 +52,8 @@
 					<thead>
 						<th> Amount </th>
 						<th> Type </th>
-						<th> Detail </th>
+						<th> Other </th>
+						<th> Delete </th>
 						<th> </th>
 					</thead>
 					<tbody>
@@ -70,11 +68,6 @@
         </form>
     </div>
 
-<form>Select the resources you wanna filter:
-  <% for(var i=0; i<resources.length; i++) {%>
-  <input name="<%=resources[i].id%>" type="checkbox" checked /> <%= resources[i].name %>
-  <% } %>
-</form>
 
 </body>
 </html>
