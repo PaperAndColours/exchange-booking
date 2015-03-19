@@ -1,9 +1,7 @@
-var async = require('async');
 var Booking = require('mongoose').model('Booking');
-var Charge  = require('mongoose').model('Charge');
 
 exports.list = function(req,res, next) {
-	Booking.find({}).populate('_resources').populate('charges').exec(function(err, bookings) {
+	Booking.find({}).populate('_resources').exec(function(err, bookings) {
 		if (err) {
 			return next(err);
 		}
@@ -14,43 +12,16 @@ exports.list = function(req,res, next) {
 };
 
 exports.create = function(req, res, next) {
-	console.log(req.body.charges);
-	async.map(req.body.charges, createCharge, function(err, charges) {
-		delete req.body.charges;
-		var booking = new Booking(req.body);
-		for (var i=0; i<charges.length; i++) {
-			booking.charges.push(charges[i]);
+	var booking = new Booking(req.body);
+	booking.save(function(err) {
+		if (err) {
+			return next(err);
+		} else {
+			res.json(booking);
 		}
-		booking.save(function(err) {
-			if (err) {
-				return next(err);
-			} else {
-				res.json(booking);
-			}
-		});
 	});
 }
 
-function createCharge(body, fn) {
-	var charge = new Charge(body);
-	charge.save(function(err) {
-		if (err)
-			console.log(err);
-		else
-			fn(err, charge);
-	});
-}
-
-function upsertCharge(body, fn) {
-	id = body.id;
-	delete body.id;
-	Charge.findByIdAndUpdate(id, body, {upsert: true}, function(err) {
-		if (err)
-			console.log(err);
-		else
-			fn(err, charge);
-	});
-}
 
 exports.read = function(req, res) {
 	res.json(req.booking);

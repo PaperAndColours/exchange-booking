@@ -6,6 +6,5 @@ module.exports = function() {
 	require('../app/models/user.server.model');
 	require('../app/models/room.server.model');
 	require('../app/models/booking.server.model');
-	require('../app/models/charge.server.model');
 	return db;
 };

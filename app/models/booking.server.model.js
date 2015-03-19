@@ -1,6 +1,12 @@
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
+var ChargeSchema = new Schema({
+	amount: {type: Number},
+    chargeType: {type: String, enum: ['booking', 'catering', 'other'], required: true},
+    otherDesc: {type: String}
+});
+
 var BookingSchema = new Schema({
 	client: {type: String, required: true},
 	start: {type: Date, required: true},
@@ -13,10 +19,7 @@ var BookingSchema = new Schema({
 		ref: 'Room',
 		required: true
 	},
-	charges: [{
-		type: Schema.Types.ObjectId,
-		ref: 'Charge',
-	}]
+	charges: [ChargeSchema]
 });
 
 
