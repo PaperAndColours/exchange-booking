@@ -1,39 +1,16 @@
 #===Front end=================
-+AllDay Issues
-------------
-DONE: Deleted allday
-
 +Confirmation upon delete
 -------------------------
-Make sure confirmation box comes on event/fee delete
-
-+Time Length Issues
--------------------
-DONE: Fixed by adding it in when the form is loaded
-
-
-+Tidy javascript file
----------------------
-Create functions to manipulate dates
-
+Confirmation box comes on event/fee delete
 
 +Charges
 --------
-	!DONE:A way to add costs
-		DONE: Make it work in the end using subdocuments
-			
-	Charge controller to also return all the enum posibilities for bookingCharge
-	Take chargeType options from charge controller posibilites ajax call
+Add support for currency
 
-	!IN PROGRESS:Get DataTables Working
-		Add support for currency
-		Add validation for rows of data
-		DONE:Add delete button for rows of data
-
-		DONE: Style input width
-
-	Set default values for newly created form
-		When no current data is available, reset to blanks & intelligent dates
+Types of charge enum
+--------------------
+Charge controller to also return all the enum posibilities for bookingCharge
+Take chargeType options from charge controller posibilites ajax call
 		
 +Finances display
 -----------------
@@ -53,10 +30,9 @@ Refresh
 -------
 Remove the need to refetch every time there is an update?
 
-No double bookings 
-------------------
-	-front end.. flag?
-	..Events don't overlap (Can i get calendar to do this for me?)
+Tidy javascript file
+---------------------
+Create functions to manipulate dates
 
 Form UI  (very optional)
 -------
@@ -68,24 +44,19 @@ Form UI  (very optional)
 		Make end time automatically update when start > end
 		(Triggered when: times changed, days changed to line up)
 
+No double bookings (maybe better without)
+------------------
+	-front end.. flag?
+	..Events don't overlap (Can i get calendar to do this for me?)
+
 #=========Back end===========
-+Revise Booking model
---------------------
-Each booking needs extra information:
-	1. DONE: Description field
-	2. DONE: Cost breakdown
-	3. DONE: Boolean for provisional? (Whether they have been confirmed with booking form)
-
-
-Possibly rename _resources to monRooms, to make easier to comprehend.. 
-
 +Validation
 ----------
 Add validation for user submitted values
 
-+User Authentication
--------------------
-Create user authentication
+DONE: User Authentication
+------------------
+DONE: Create user authentication
 
 Queries
 -------
@@ -95,23 +66,34 @@ Preferences
 ----------
   create preferences dialog, for room costs, etc
   create administration/option pages for rooms, admin, overview
+  preferences to change things like: room screen, room charge, fee/charge types
 
 Create new mvc for:
 ------------------
 	Client
 	Admin
-	Preferences object
+
+(?)_resources
+-------------
+rename _resources to dbResources, to make easier to comprehend.. 
 
 #========Style==================
-Style popup window
+Create pages:
+	Front Page
+	Top bar for all pages
+	Calendar page with top bar
+	Admin pages
+	Finance page
+
 Style calendar
-Model page on google calendar page?
-Separate box to add info
 
 Change white room from grey to white
 
 Sort out/tidy up css classes
 Get rid of coloured columns when a different day is selected
+
+Style popup window
+Sort out jquery popup scrolling / height
 
 #=======Server===================
 +Heroku
@@ -142,6 +124,4 @@ Export CSV - find out how difficult
 #========Optional Features===============
 Put in hourly rate, for rooms. This will be suggested as a value, but not directly saved
 Change provisional checkbox to enum thing
-Add confirmation dialog on delete
-Preferences to change things like: room screen, room charge, fee/charge types
 Document javascript front end file
