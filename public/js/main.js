@@ -12,7 +12,6 @@ $(document).ready(function () {
 			data: JSON.stringify(event),
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
-			async: false,
 			success: onSuccess,
 			error: onError});
 	}
@@ -31,7 +30,6 @@ $(document).ready(function () {
 			data: JSON.stringify(payload),
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
-			async: false,
 			success: onSuccess,
 			error: onError
 			});
@@ -45,7 +43,6 @@ $(document).ready(function () {
 			type: 'DELETE',
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
-			async: false,
 			success: onSuccess,
 			error: onError
 			});
@@ -58,7 +55,6 @@ $(document).ready(function () {
 			type: 'GET',
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
-			async: false,
 			success: function(msg) {
 				chargeTypes = msg;
 				}
