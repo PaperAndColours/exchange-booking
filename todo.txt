@@ -1,8 +1,4 @@
 #===Front end=================
-+Updating pushes back 1 hour
-----------------------------
-wtf?
-
 Connection lost - Don't delete events from screen
 -------------------------------------------------
 Change refetchupdates() so that it doesn't have to refetch the updates, just modify the ones being modified

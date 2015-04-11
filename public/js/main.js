@@ -296,8 +296,8 @@ $(document).ready(function () {
 		returnObj = [];
 		start = moment(startdate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(starttime.timepicker("getTime")).format("hh:mm a");
 		end = moment(enddate.datepicker("getDate")).format("DD/MM/YYYY")+ " " + moment(endtime.timepicker("getTime")).format("hh:mm a");
-		returnObj.start = moment(start, "DD/MM/YYYY hh:mm a").toDate();
-		returnObj.end = moment(end, "DD/MM/YYYY hh:mm a").toDate();
+		returnObj.start = moment.utc(start, "DD/MM/YYYY hh:mm a").toDate();
+		returnObj.end = moment.utc(end, "DD/MM/YYYY hh:mm a").toDate();
 
 		return returnObj;
 	}
@@ -320,7 +320,6 @@ $(document).ready(function () {
 			sendUpdate(event, function(){
 				alert("Could not connect to server - Update failed")},
 				function() {
-					console.log(event)
 					$("#calendar").fullCalendar('updateEvent', event);
 					$('#calendar').fullCalendar('refetchEvents');
 					dialog.dialog("close");

@@ -1,3 +1,8 @@
+DONE: +Updating pushes back 1 hour
+----------------------------
+DONE:wtf?
+Turns out it was because of BST + moment. Needed to use moment.utc()
+
 DONE: +Revert
 ------
 Make sure calendar reverts. when server operation not successful
