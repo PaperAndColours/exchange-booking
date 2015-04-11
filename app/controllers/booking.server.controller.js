@@ -1,4 +1,11 @@
+var Charge = require('mongoose').model('Charge');
 var Booking = require('mongoose').model('Booking');
+
+exports.chargeTypes = function(req, res, next) {
+	var charge = new Charge();
+	var chargeTypes = charge.schema.path('chargeType').enumValues;
+	res.json(chargeTypes);
+}
 
 exports.list = function(req,res, next) {
 	Booking.find({}).populate('_resources').exec(function(err, bookings) {

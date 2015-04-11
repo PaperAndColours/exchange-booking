@@ -1,3 +1,27 @@
+DONE: +Revert
+------
+Make sure calendar reverts. when server operation not successful
+Places:
+	DONE: Dragging an event
+	DONE: Resizing an event
+	DONE: Creating an event via dialog
+	DONE: Updating an event via dialog
+	DONE: Deleting an event via dialog
+	
+DONE: Fix the bug outlined here: http://www.ikelin.com/fullcalendar-resource-day-view-bug/
+
+DONE: Types of charge enum
+--------------------
+Charge controller to also return all the enum posibilities for bookingCharge
+Take chargeType options from charge controller posibilites ajax call
+
+DONE: User Authentication
+------------------
+DONE: Create user authentication
+
++Charges
+--------
+DONE: Add support for currency
 
 ------------------------------------------
 Disable multi-room bookings. - Make it so each room requires a seperate box

@@ -21,6 +21,9 @@ ChargeSchema.virtual('amount').set(function(value) {
 ChargeSchema.set('toObject', { virtuals: true, setters: true, getters: true });
 ChargeSchema.set('toJSON', { virtuals: true, setters: true, getters: true });
 
+mongoose.model('Charge', ChargeSchema);
+
+
 var BookingSchema = new Schema({
 	client: {type: String, required: true},
 	start: {type: Date, required: true},

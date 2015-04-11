@@ -1,6 +1,8 @@
 module.exports = function(app) {
 	var booking = require('../controllers/booking.server.controller');
 
+	app.get('/calendar/chargeTypes', booking.chargeTypes);
+
 	app.post('/calendar/booking', booking.create);
 	app.get('/calendar/booking', booking.list);
 	app.route('/calendar/booking/:bookingId')

@@ -2,7 +2,7 @@
 	//Even develop a couple of functions for them
 $(document).ready(function () {
 //---------Calendar Functions-----------
-	function sendCreate(event) {
+	function sendCreate(event, onError, onSuccess) {
 	/**
 	* Save booking on server
 	*/
@@ -13,14 +13,11 @@ $(document).ready(function () {
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
 			async: false,
-			success: function(msg) {
-				$('#calendar').fullCalendar('refetchEvents');
-				$('#calendar').fullCalendar('unselect');
-				}
-			});
+			success: onSuccess,
+			error: onError});
 	}
 	
-	function sendUpdate(event) {
+	function sendUpdate(event, onError, onSuccess) {
 	/**
 	* Update booking on server
 	*/
@@ -35,12 +32,11 @@ $(document).ready(function () {
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
 			async: false,
-			success: function(msg) {
-				//alert(msg._resources);
-				}
+			success: onSuccess,
+			error: onError
 			});
 	}
-	function sendDelete(event) {
+	function sendDelete(event, onError, onSuccess) {
 	/**
 	* Update booking on server
 	*/
@@ -50,8 +46,21 @@ $(document).ready(function () {
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
 			async: false,
+			success: onSuccess,
+			error: onError
+			});
+	}
+
+	chargeTypes = undefined;
+	function getChargeTypes(event) {
+			$.ajax({
+			url: 'chargeTypes',
+			type: 'GET',
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'json',
+			async: false,
 			success: function(msg) {
-				//alert(msg._resources);
+				chargeTypes = msg;
 				}
 			});
 	}
@@ -89,11 +98,21 @@ $(document).ready(function () {
 		 createUpdateDialog(event);
         },
         eventDrop: function (event, delta, revertFunc) {
-		  sendUpdate(event);
+		  onFail = function(event) {
+		  	revertFunc();
+			event.resourceId = event.oldResourceId;
+			alert("Could not connect to server - Update failed")
+		 }
+		  sendUpdate(event, onFail);
 		  $('#calendar').fullCalendar('refetchEvents');
         },
 	    eventResize: function (event, delta, revertFunc) {
-		  sendUpdate(event);
+		  onFail = function(event) {
+		  	revertFunc();
+			event.resourceId = event.oldResourceId;
+			alert("Could not connect to server - Update failed");
+		 }
+		  sendUpdate(event, onFail);
 		}
       });
 
@@ -101,6 +120,11 @@ $(document).ready(function () {
       $('input:checkbox').change(function(){
         $('#calendar').fullCalendar('render');
       });
+
+
+//----------Global initialization--------------------------------
+	getChargeTypes();
+	
 
 //----------Form creation and initialization----------------------
 	var dialog, form,
@@ -297,10 +321,15 @@ $(document).ready(function () {
 		if (validateBookingForm()) {
 			event = $("#calendar").fullCalendar('clientEvents', eventID.val())[0];
 			addCustomEventInfo(event);
-			sendUpdate(event);
-			$("#calendar").fullCalendar('updateEvent', event)
-			$('#calendar').fullCalendar('refetchEvents');
-			dialog.dialog("close");
+			sendUpdate(event, function(){
+				alert("Could not connect to server - Update failed")},
+				function() {
+					console.log(event)
+					$("#calendar").fullCalendar('updateEvent', event);
+					$('#calendar').fullCalendar('refetchEvents');
+					dialog.dialog("close");
+				}
+			)
 			return true;
 		}
 		else return false;
@@ -310,9 +339,17 @@ $(document).ready(function () {
 		if (validateBookingForm()) {
 			event = {};
 			addCustomEventInfo(event);
-			sendCreate(event);
+			sendCreate(event, 
+				function() {
+					alert("Could not connect to server - Update failed")
+				},
+				function() {
+					$('#calendar').fullCalendar('refetchEvents');
+					$('#calendar').fullCalendar('unselect');
+					dialog.dialog("close");
+				}
+			);
 			
-			dialog.dialog("close");
 			return true;
 		}
 		else return false;
@@ -320,9 +357,12 @@ $(document).ready(function () {
 
 	function deleteBooking() {
 		event = $("#calendar").fullCalendar('clientEvents', eventID.val())[0]
-		sendDelete(event);
-		$('#calendar').fullCalendar('refetchEvents');
-		dialog.dialog("close");
+		sendDelete(event, function() {
+			alert("Could not connect to server - Delete failed")},
+		function() {
+			$('#calendar').fullCalendar('refetchEvents');
+			dialog.dialog("close");
+		});
 	} 
 
 //--------Form Creation-------------
@@ -449,7 +489,7 @@ $(document).ready(function () {
 	function makeChargeRow(amount, selection, other, id) {
 		chargeRow = [
 				makeInputBox("amount-"+String(chargeRowCounter), amount, "text", "chargeAmount"),
-				makeSelectBox("type-"+String(chargeRowCounter), ["booking", "catering", "other"], selection, "chargeType"),
+				makeSelectBox("type-"+String(chargeRowCounter), chargeTypes, selection, "chargeType"),
 				makeInputBox("other-"+String(chargeRowCounter), other, "text", "chargeOtherType"),
 				makeDeleteButton(),
 				makeInputBox("id-"+String(chargeRowCounter), id, "hidden", "chargeID")
