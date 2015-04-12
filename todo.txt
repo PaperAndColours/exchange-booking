@@ -7,18 +7,10 @@ Switch to fulcallendar.updateEvent()
 
 Connection lost - continuously retry to connect
 -----------------------------------------------
-Display a message explaining connection lost
+Perhaps try to reconnect several times, after a delay, and if it doesn't work after say 5 times, then display an error message
+DONE: Display a message explaining connection lost
 
-+<Enter> when entering fee
-------------------------
-Currently deletes current fee, needs to change
-Look in table library?
-
-+Confirmation upon delete
--------------------------
-Confirmation box comes on event/fee delete
-
-Finances display
++Finances display
 -----------------
 Create a screen to display finances, with breakdowns
 
@@ -26,10 +18,10 @@ Create a screen to display finances, with breakdowns
 --------------------
 Make clicking on a day in the calendar jump straight to that day
 
-
 Refresh
 -------
 Remove the need to refetch every time there is an update?
+Mostly just fix colors
 
 Tidy javascript file
 ---------------------
@@ -58,6 +50,10 @@ Find new passport strategy
 +Validation
 ----------
 Add validation for user submitted values
+	Booking form values
+		Dates in order
+		Check javascript for other details
+	Charge values
 
 Queries
 -------

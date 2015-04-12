@@ -1,3 +1,13 @@
+DONE:+<Enter> when entering fee
+------------------------
+Currently deletes current fee, needs to change
+Look in table library?
+It's because it is auto-clicking the delete button
+
+DONE: +Confirmation upon delete
+-------------------------
+Confirmation box comes on event/fee delete
+
 DONE: +Updating pushes back 1 hour
 ----------------------------
 DONE:wtf?

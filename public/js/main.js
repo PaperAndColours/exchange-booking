@@ -352,12 +352,14 @@ $(document).ready(function () {
 
 	function deleteBooking() {
 		event = $("#calendar").fullCalendar('clientEvents', eventID.val())[0]
-		sendDelete(event, function() {
-			alert("Could not connect to server - Delete failed")},
-		function() {
-			$('#calendar').fullCalendar('refetchEvents');
-			dialog.dialog("close");
-		});
+		if (confirm("Permanently Delete Booking?")) {
+			sendDelete(event, function() {
+				alert("Could not connect to server - Delete failed")},
+			function() {
+				$('#calendar').fullCalendar('refetchEvents');
+				dialog.dialog("close");
+			});
+		}
 	} 
 
 //--------Form Creation-------------
@@ -521,11 +523,21 @@ $(document).ready(function () {
 						otherField.hide();
 						
 				});
+				$(row).bind('keypress keydown keyup', function(event){
+					if (event.keyCode == 13){
+						event.preventDefault()
+						chargeRow = makeChargeRow(0, chargeTypes[0], "", "")
+						t.row.add(chargeRow).draw();
+					}
+				});
 				$(row).find('.chargeDelete').on('click', function(event) {
+					console.log(event);
 					event.preventDefault();
-					$(row).find('.chargeAmount').autoNumeric('destroy');
-					t.row(row).remove();
-					t.draw();
+					if (confirm("Delete Event Charge?")) {
+						$(row).find('.chargeAmount').autoNumeric('destroy');
+						t.row(row).remove();
+						t.draw();
+					}
 				});
 			}
 		});
@@ -560,7 +572,7 @@ $(document).ready(function () {
 
 	$('#addCharge').on('click', function(event) {
 		event.preventDefault();
-		chargeRow = makeChargeRow(0, "booking", "", "")
+		chargeRow = makeChargeRow(0, chargeTypes[0], "", "")
 		t.row.add(chargeRow).draw();
 	});
 
