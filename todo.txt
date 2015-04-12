@@ -42,18 +42,14 @@ No double bookings (maybe better without)
 	-front end.. flag?
 	..Events don't overlap (Can i get calendar to do this for me?)
 
+Add month selection calendar
+----------------------------
+On the top panel
+
 #=========Back end===========
 +Keep user logged in on database
 --------------------------------
 Find new passport strategy
-
-+Validation
-----------
-Add validation for user submitted values
-	Booking form values
-		Dates in order
-		Check javascript for other details
-	Charge values
 
 Queries
 -------
@@ -76,22 +72,18 @@ Create new mvc for:
 rename _resources to dbResources, to make easier to comprehend.. 
 
 #========Style==================
-Create pages:
-	Front Page
-	Top bar for all pages
-	Calendar page with top bar
-	Admin pages
-	Finance page
+Provisional payments / confirmed bookings show up as major elements
 
++Get rid of coloured columns when a different day is selected
+models/booking.js has some info about virtuals with colour info
+
+Top bar for all pages
+Resize jquery and calendar on browser resize
 Style calendar
 
 Change white room from grey to white
-
-Sort out/tidy up css classes
-Get rid of coloured columns when a different day is selected
-
 Style popup window
-Sort out jquery popup scrolling / height
+Sort out/tidy up css classes
 
 #=======Server===================
 +Heroku
@@ -124,3 +116,4 @@ Export CSV - find out how difficult
 Put in hourly rate, for rooms. This will be suggested as a value, but not directly saved
 Change provisional checkbox to enum thing
 Document javascript front end file
+User types: admin/ normal

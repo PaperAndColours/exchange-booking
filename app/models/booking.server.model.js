@@ -38,6 +38,14 @@ var BookingSchema = new Schema({
 	charges: [ChargeSchema]
 });
 
+BookingSchema.pre('validate', function(next) {
+	if (this.start > this.end) {
+		next(new Error("End Date must be greater than Start Date"));
+	}
+	else {
+		next();
+	}
+});
 
 BookingSchema.virtual('title').get(function() {
 	return this.client;

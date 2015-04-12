@@ -1,3 +1,12 @@
+DONE: +Validation (Back end)
+----------
+Add validation for user submitted values
+	Booking form values
+		DONE: Dates in order
+		Check javascript for other details
+	Charge values
+I think the other stuff is basically covered by the "type" property
+
 DONE: +Calendar Navigation
 --------------------
 Make clicking on a day in the calendar jump straight to that day
