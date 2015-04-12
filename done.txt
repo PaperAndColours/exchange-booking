@@ -1,3 +1,7 @@
+DONE: +Calendar Navigation
+--------------------
+Make clicking on a day in the calendar jump straight to that day
+
 DONE:+<Enter> when entering fee
 ------------------------
 Currently deletes current fee, needs to change

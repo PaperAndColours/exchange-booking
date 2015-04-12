@@ -87,8 +87,20 @@ $(document).ready(function () {
         selectable: true,
         selectHelper: true,
 		select: function(start, end, ev) { //start, end, resources
-				eventData = {"start": start, "end": end, "resources": ev.data.id};
-				createSaveDialog(eventData);
+				viewName = $('#calendar').fullCalendar('getView').name;
+				console.log(viewName);
+				if (viewName == "resourceDay") {
+					eventData = {"start": start, "end": end, "resources": ev.data.id};
+					createSaveDialog(eventData);
+				}
+				else if (viewName == "agendaWeek") {
+					eventData = {"start": start, "end": end};
+					createSaveDialog(eventData);
+				}
+				else if (viewName == "month") {
+					$('#calendar').fullCalendar('changeView', 'resourceDay');
+					$('#calendar').fullCalendar('gotoDate', start);
+				}
 			},
         eventClick: function (event) {
 		 createUpdateDialog(event);
