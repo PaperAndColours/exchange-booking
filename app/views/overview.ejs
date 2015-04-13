@@ -3,15 +3,28 @@
 <head>
   <meta charset='utf-8'/>
   <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css'>
+  <link href="/js/bower_components/DataTables/media/css/jquery.dataTables.min.css" rel='stylesheet'>
 
   <script src='/js/fullCalendarResources/lib/moment/moment.js'></script>
   <script src='/js/fullCalendarResources/lib/jquery/dist/jquery.js'></script>
+  <script src="/js/bower_components/DataTables/media/js/jquery.dataTables.min.js"></script>
   <script src="/js/overview.js"></script>
 </head>
 <body>
 <div class="container"> <div class="padding">
 	<div class="col-lg-12">
 		<h1> Booking Overviews </h1>
+				<table id="Bookings">
+					<thead>
+						<th> Client </th>
+						<th> Dates + Times </th>
+						<th> Other </th>
+						<th> Delete </th>
+						<th> </th>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
 
 			<% for(var i=0; i<bookings.length; i++) {%>
 				<div class="panel panel-default"> 
