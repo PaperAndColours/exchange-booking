@@ -18,5 +18,9 @@
     "express-session": "~1.9.3",
     "mongoose": "~3.8.15",
     "passport": "~0.2.1"
+	"async": "~0.9.0",
+	"connect-flash": "~0.1.1",
+	"mongoose-currency": "~0.0.4",
+	"passport-local": "~1.0.0"
   }
 }
