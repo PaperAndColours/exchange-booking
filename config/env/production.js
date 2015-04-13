@@ -1,5 +1,5 @@
 module.exports = {
-	db: MONGOLAB_URI,
-	sessionSecret: SESSION_SECRET
+	db: node.env.MONGOLAB_URI,
+	sessionSecret: node.env.SESSION_SECRET
 	//Production configuration options
 }
