@@ -13,33 +13,48 @@ input {cursor: pointer;}
 
 
 
-#headerBar {
-height: 50px;
-background-color: #E10707;
+#header {
+background: #DF0505
 }
-#headerBar img {
-width: 81px;
+
+#center_header {
+background: #E10707;
 height: 50px;
+margin: auto;
+width: 980px;
+}
+#left_header {
 float: left;
-padding-left: 70px;
+font-size: 20pt;
+line-height: 50px;
+text-align: center;
+width: 470px;
+}
+#menu {
+	float: right;
+	height: 30px;
+	margin: 22px 0 0;
+	width: 430px;
+}
+#menu a {
+	color: #EEEEEE;
+	font-size: 13px;
+	font-weight: bold;
+	padding: 8px 12px;
+	}
+#menu a:hover{
+	background: #000;
+}
+#header img { width: 81px;
+padding-left: 35px;
+float: left;
+height: 50px;
 }
 
-#headerBar p {
-color: white;
-float: right;
-display: block;
-padding-right: 15px;
-font-size: 10pt;
-}
-#headerBar p a {
-color: white;
-font-style: bold;
-}
-
-#headerBar h1 {
+#header h1 {
 color: white;
 font-size: 12pt;
-padding: 10px 0 0 30px;
+padding: 0 0 0 30px;
 margin: 0 0 0 0;
 }
 

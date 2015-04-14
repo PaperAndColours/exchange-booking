@@ -24,7 +24,7 @@ var getErrorMessage = function(err) {
 exports.renderSignin = function(req, res, next) {
 	if (!req.user) {
 		res.render('signin', {
-			title: "Sign in form",
+			title: "Moseley Exchange Room Hire System",
 			messages: req.flash('error') || req.flash('info')
 		});
 	} else {

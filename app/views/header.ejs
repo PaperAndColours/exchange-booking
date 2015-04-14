@@ -1,8 +1,16 @@
-<div id="headerBar">
-<img src="/img/moseley-exchange-logo.jpg"/>
-<h1> Moseley Exchange Room Hire System </h1>
-
-<% if ( userFullName ) { %>
-	<p> Logged in as <i><%=userFullName%> </i><a href="/signout"> Sign Out </a> </p>
-<% } %>
-</div>
+<div id="header">
+	<div id="center_header">
+	<div id="left_header">
+		<img src="/img/moseley-exchange-logo.jpg"/>
+		<h1> Moseley Exchange Room Hire System </h1>
+	</div>
+	<div id="right_header">
+		<div id="menu">
+			<a href="#"> Calendar </a>
+			<a href="#"> Overview </a>
+			<a href="#"> <%=userFullName%> </a>
+			<a href="/signout"> Sign Out </a>
+		</div>
+	</div>
+	</div> <!-- #center_header -->
+</div> <!-- #header -->
