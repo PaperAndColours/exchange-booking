@@ -1,0 +1,71 @@
+Use case scenarios
+
+Actor:
+------
+	Admin
+	
+#Case#	A client phones up, to book a room
+Admin:	See times/rooms available
+	(Access fairly quickly)
+	Save appointment
+	Send booking form to client (email or post)
+	Discuss payment
+
+#Case#	Client pays by phone or in person
+	Mark payment on the system
+
+#Case#	Receive booking form in the post
+Admin:	Keep track of the fact it was received (this is often difficult for admins to do)
+	Mark form as received (and on database)
+	Store it in a folder
+
+#Case#	Client arrives for booking
+Admin:	Check booking to see who is going to due
+	Note that client arrived for appointment
+
+
+Actor:  
+------
+	Client
+#Cases# Book appointment, fill in booking form, turn up for appointment
+	Book online,
+	Pay for appointment
+	Email/sms reminders? Use of this key does not require any user action or consent, does not grant access to any account information, and is not used for authorization. 
+
+
+Actor:
+------
+	Website
+
+#Case#	Client makes enquiry online
+	Display availability to clients
+	Display terms and conditions to clients
+
+#Case#	Client makes booking online
+	Save client information
+	Save information to calendar
+	Dispatch booking form
+	
+#Case#	Client pays for booking online
+	Mark payment on system
+
+Actor:
+------
+	Financial Manager
+#Case#	Doing invoices for clients
+	Have a list of appointments, with information
+	Import information into invoicing software
+	Generate invoice
+
+
+Actor:
+------
+	Director
+#Case#	Reviewing appointments for information
+	Have a list of clients, with information
+
+
+
+Payment / bank?
+Payment options? Invoice - pay by x,y,z
+
