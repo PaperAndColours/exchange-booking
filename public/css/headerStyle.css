@@ -1,0 +1,102 @@
+body {
+padding: 0;
+margin: 0;
+}
+#header {
+
+background: #E10707;
+font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#center_header {
+background: #E10707;
+height: 50px;
+margin: auto;
+width: 980px;
+}
+#left_header {
+float: left;
+font-size: 20pt;
+line-height: 50px;
+text-align: center;
+width: 670px;
+}
+#header img { width: 81px;
+padding-left: 35px;
+float: left;
+height: 50px;
+}
+
+#header h1 {
+color: white;
+font-size: 14pt;
+padding: 0 0 0 250px;
+margin: 0;
+}
+
+ul.topnav {
+	list-style: none;
+	padding: 0px 20px 0 20px;	
+	margin: 0;
+	float: right;
+	width: 510;
+	background: #222;
+	font-size: 11pt;
+	background: none;
+}
+ul.topnav li {
+	float: left;
+	margin: 0;	
+	position: relative; /*--Declare X and Y axis base for sub navigation--*/
+	padding: 0px 2px;
+}
+ul.topnav li a{
+	background: #af0e0e;
+	padding: 17px 5px;
+	color: #fff;
+	display: block;
+	text-decoration: none;
+	float: right;
+}
+
+ul.topnav li a.selected{
+	background: #700c0c;
+}
+
+ul.topnav li a:hover{
+	background: #700c0c;
+}
+ul.topnav li ul.subnav {
+	z-index: 2000;
+	list-style: none;
+	position: absolute; /*--Important - Keeps subnav from affecting main navigation flow--*/
+	left: 0; top: 52px;
+	margin: 0; padding: 0;
+	display: none;
+	float: left;
+	width: 130px;
+	border: 1px solid #111;
+}
+ul.topnav li ul.subnav li{
+	margin: 0; padding: 0;
+	border-top: 1px solid #252525; /*--Create bevel effect--*/
+	border-bottom: 1px solid #444; /*--Create bevel effect--*/
+	clear: both;
+	width: 130px;
+}
+html ul.topnav li ul.subnav li a {
+	color: #000;
+	float: right;
+	width: 105px;
+	line-height: 0;
+	background: #e2aeae;
+	padding-left: 20px;
+}
+html ul.topnav li ul.subnav li a:hover { /*--Hover effect for subnav links--*/
+	background: #b56e6e;
+}
+
+html ul.topnav li ul.subnav li a.selected { /*--Hover effect for subnav links--*/
+	background: #9e5555;
+}
+

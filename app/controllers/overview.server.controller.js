@@ -7,7 +7,8 @@ exports.render = function(req,res, next) {
 		}
 		else {
 			res.render('overview', {
-				bookings: bookings
+				bookings: bookings,
+				userFullName: req.user ? req.user.fullName : ''
 			});
 		}
 	});

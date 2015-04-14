@@ -5,11 +5,20 @@
 		<h1> Moseley Exchange Room Hire System </h1>
 	</div>
 	<div id="right_header">
-		<div id="menu">
-			<a href="#"> Calendar </a>
-			<a href="#"> Overview </a>
-			<a href="#"> <%=userFullName%> </a>
-			<a href="/signout"> Sign Out </a>
+		<ul class="topnav">
+			<li> <a href="/calendar"> Calendar </a></li>
+			<li> <a href="/calendar/overview"> Overview </a>
+				<ul class="subnav">
+					<li> <a href="#">Spreadsheet </a></li>
+					<li> <a href="#">Graphs </a></li>
+				</ul>
+			</li>
+			<li> <a href="#"> <%=userFullName%> </a>
+				<ul class="subnav">
+					<li> <a href="/signout"> Sign Out </a></li>
+				</ul>
+			</li>
+		</ul>
 		</div>
 	</div>
 	</div> <!-- #center_header -->
