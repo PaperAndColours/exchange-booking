@@ -7,7 +7,8 @@ exports.render = function(req,res, next) {
 		}
 		else {
 			res.render('calendar', {
-				resources: Rooms
+				resources: Rooms,
+				userFullName: req.user ? req.user.fullName : ''
 			});
 		}
 	});

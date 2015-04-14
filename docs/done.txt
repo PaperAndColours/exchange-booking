@@ -1,3 +1,16 @@
+DONE: Javascript/Bower
+----------------
+DONE: Make sure all javascript and bower will work in the correct directories
+
+DONE: +Heroku
+--------------------
+DONE:Upload app onto heroku and make sure it works
+DONE:Make sure bower/js component DL properly
+
+DONE:+Create front page with login form
+---------------------------------------
+DONE: Login form created
+
 DONE: +Validation (Back end)
 ----------
 Add validation for user submitted values

@@ -80,7 +80,7 @@ $(document).ready(function () {
         editable: true,
         droppable: true,
         resources: 'rooms',
-		height: $(window).height()*.9,
+		height: $(window).height()*.9 -65,
         events: 'booking',
         // the 'ev' parameter is the mouse event rather than the resource 'event'
         // the ev.data is the resource column clicked upon

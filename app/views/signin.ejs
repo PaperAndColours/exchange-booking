@@ -1,31 +1,39 @@
 <!DOCTYPE html>
 <html>
+	<head>
+		<link href='/css/loginStyle.css' rel='stylesheet'/> 
+		<title><%= title %></title>
+	</head>
+	<body>
+<div id="wrapper">
 
-<head>
-    <title>
-        <%=title %>
-    </title>
-</head>
-
-<body>
-    <% for(var i in messages) { %>
-        <div class="flash">
+	<form name="login-form" class="login-form" action="/signin" method="post">
+	
+		<div class="header">
+		<h1>Login Form</h1>
+		<% for(var i in messages) { %>
+        <span class="flash">
             <%=messages[i] %>
-        </div>
+        </span>
         <% } %>
-            <form action="/signin" method="post">
-                <div>
-                    <label>Username:</label>
-                    <input type="text" name="username" />
-                </div>
-                <div>
-                    <label>Password:</label>
-                    <input type="password" name="password" />
-                </div>
-                <div>
-                    <input type="submit" value="Sign In" />
-                </div>
-            </form>
-</body>
+		</div>
+	
+		<div class="content">
+		<input name="username" type="text" class="input username" placeholder="Username" />
+		<div class="user-icon"></div>
+		<input name="password" type="password" class="input password" placeholder="Password" />
+		<div class="pass-icon"></div>		
+		</div>
 
+		<div class="footer">
+		<input type="submit" name="submit" value="Login" class="button" />
+		<input type="submit" name="submit" value="Register" class="register" />
+		</div>
+	
+	</form>
+
+</div>
+<div class="gradient"></div>
+
+	</body>
 </html>
