@@ -1,3 +1,20 @@
+DONE: +Correct redirection
+--------------------
+(Maybe done, another issue pending)
+So front page goes straight to calendar. Perhaps no /calendar/, but everything goes to front page except overview
+
+Front page = is user signed in ? calendar page : signin page
+Calendar page = is user signed in ? calendar page : signin page
+Overview page = is user signed in ? calendar page : signin page
+
+Booking/room api = is user signed in ? make request : don't make request
+
+DONE: +Resource path
+--------------
+DONE: Fixed by displaying absolute paths
+main.js seems to sometimes call calendar/whatever, and sometimes /whatever from ajax calls
+Post onto SO about bug where resources address changes
+
 DONE: Javascript/Bower
 ----------------
 DONE: Make sure all javascript and bower will work in the correct directories

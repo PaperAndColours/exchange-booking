@@ -35,17 +35,6 @@ Create a screen to display finances, with breakdowns
 										10.00 Other: Cocktail Bar
 	
 
-IN PROGRESS:+Correct redirection
---------------------
-So front page goes straight to calendar. Perhaps no /calendar/, but everything goes to front page except overview
-
-Front page = is user signed in ? calendar page : signin page
-Calendar page = is user signed in ? calendar page : signin page
-Overview page = is user signed in ? calendar page : signin page
-
-Booking/room api = is user signed in ? make request : don't make request
-
-
 +Header Bar
 -----------
 Add jquery menu
@@ -135,11 +124,6 @@ Change white room from grey to white
 Sort out/tidy up css classes
 
 #=======Server===================
-Resource path
--------------
-Post onto SO about bug where resources address changes
-(Hasn't been a problem for a while.. maybe its okay)
-
 #==========Internal=============
 Find the way to execute mongo commands from command line (or python) - to auto-populate
 Make the python tool more generic

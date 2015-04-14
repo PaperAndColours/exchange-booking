@@ -7,7 +7,7 @@ $(document).ready(function () {
 	* Save booking on server
 	*/
 			$.ajax({
-			url: 'booking/',
+			url: '/calendar/booking/',
 			type: 'POST',
 			data: JSON.stringify(event),
 			contentType: 'application/json; charset=utf-8',
@@ -25,7 +25,7 @@ $(document).ready(function () {
 				payload._resources = payload.resources[0];
 			delete payload["_id"];
 			$.ajax({
-			url: 'booking/'+event.id,
+			url: '/calendar/booking/'+event.id,
 			type: 'PUT',
 			data: JSON.stringify(payload),
 			contentType: 'application/json; charset=utf-8',
@@ -39,7 +39,7 @@ $(document).ready(function () {
 	* Update booking on server
 	*/
 			$.ajax({
-			url: 'booking/'+event.id,
+			url: '/calendar/booking/'+event.id,
 			type: 'DELETE',
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
@@ -51,7 +51,7 @@ $(document).ready(function () {
 	chargeTypes = undefined;
 	function getChargeTypes(event) {
 			$.ajax({
-			url: 'chargeTypes',
+			url: '/calendar/chargeTypes',
 			type: 'GET',
 			contentType: 'application/json; charset=utf-8',
 			dataType: 'json',
@@ -79,9 +79,9 @@ $(document).ready(function () {
         defaultView: 'resourceDay',
         editable: true,
         droppable: true,
-        resources: 'rooms',
+        resources: '/calendar/rooms',
 		height: $(window).height()*.9 -65,
-        events: 'booking',
+        events: '/calendar/booking',
         // the 'ev' parameter is the mouse event rather than the resource 'event'
         // the ev.data is the resource column clicked upon
         selectable: true,
