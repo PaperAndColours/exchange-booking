@@ -11,4 +11,9 @@ module.exports = function(app) {
 		.delete(booking.delete);
 
 	app.param('bookingId', booking.bookingByID);
+
+	app.route('/calendar/booking/byRoom/:bookingRoomId')
+		.get(booking.listByRoom)
+
+	app.param('bookingRoomId', booking.attachRoomID);
 };

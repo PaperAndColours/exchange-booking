@@ -11,7 +11,6 @@ exports.list = function(req,res, next) {
 	});
 };
 
-
 exports.create = function(req, res, next) {
 	var room = new Room(req.body);
 	room.save(function(err) {

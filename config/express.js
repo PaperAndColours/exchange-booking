@@ -40,6 +40,7 @@ module.exports = function() {
 	require('../app/routes/room.server.routes.js')(app);
 	require('../app/routes/booking.server.routes.js')(app);
 	require('../app/routes/overview.server.routes.js')(app);
+	require('../app/routes/preferences.server.routes.js')(app);
 
 	app.use(express.static('./public'));
 

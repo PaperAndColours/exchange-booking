@@ -1,3 +1,4 @@
+var Room = require('mongoose').model('Room');
 var Charge = require('mongoose').model('Charge');
 var Booking = require('mongoose').model('Booking');
 
@@ -17,6 +18,17 @@ exports.list = function(req,res, next) {
 		}
 	});
 };
+
+exports.listByRoom = function(req, res, next){
+	Booking.find({"_resources": req.bookingRoom}, function(err, bookings) {
+		if (err){
+			return next(err);
+		}
+		else {
+			res.json(bookings);
+		}
+	});
+}
 
 exports.create = function(req, res, next) {
 	var booking = new Booking(req.body);
@@ -47,6 +59,17 @@ exports.bookingByID = function(req, res, next, id) {
 	});
 }
 
+exports.attachRoomID = function(req, res, next, id) {
+	Room.findById(id, function(err, room) {
+		if (err){
+			return next(err);
+		}
+		else{
+			req.bookingRoom = room;
+			next();
+		}
+	});
+}
 
 exports.update= function(req, res, next) {
 	Booking.findByIdAndUpdate(req.booking.id, req.body, function(err, booking) {

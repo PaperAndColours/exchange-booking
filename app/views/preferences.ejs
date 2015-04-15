@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href='/css/headerStyle.css' rel='stylesheet'/> 
+  <script src='/js/bower_components/jquery/dist/jquery.js'></script>
+    <title>
+        <%=title %>
+    </title>
+<script>
+	function getRoomBookings(roomID, onSuccess) {
+	/**
+	* Save booking on server
+	*/
+			$.ajax({
+			url: '/calendar/booking/byRoom/'+roomID,
+			type: 'GET',
+			contentType: 'application/json; charset=utf-8',
+			dataType: 'json',
+			success: onSuccess
+			});
+	}
+
+	$(document).ready(function() {
+		var removeRow = function(e) {
+			e.preventDefault();
+			var _this = this;
+			getRoomBookings($(this).parent().find("input[name='id']").val(), function(bookings) {
+			if(confirm("There are "+ bookings.length +" bookings associated with this room. Deleting this room will also delete these bookings. Are you sure you want to continue?"))
+				$(_this).parent().remove();
+			})
+		}
+		$(".deleteRoom").on("click", removeRow);
+
+		$(".addRoom").on("click", function(e) {
+			e.preventDefault();
+			lastRow = $(".rooms").find(".roomRow").last();
+			newLast = lastRow.clone();
+			newLast.insertAfter(lastRow);
+			$(newLast).find("input[name='name']").val("");
+			$(newLast).find("input[name='className']").val("");
+			$(newLast).find("input[name='id']").val("");
+			$(newLast).find(".deleteRoom").on("click", removeRow);
+		});
+	});
+</script>
+</head>
+
+<body>
+	<%include header%>
+		<h1> Rooms </h1>
+	<form action="/calendar/preferences" method="post">
+		<% for (room in rooms) { %>
+			<%theRoom = rooms[room]%>
+			<div class="rooms">
+				<div class="roomRow">
+					<label> Name: </Label>
+					<input type="text" name="name" value="<%=theRoom.name%>" > </input>
+					<label> Color: </Label>
+					<input type="text" name="className" value="<%=theRoom.className%>" > </input>
+					<input type="text" name="id" value="<%=theRoom.id%>" > </input>
+					<input class="deleteRoom" type="button" value="Delete">
+				</div>
+			<% } %>
+			</div>
+			<input class="addRoom" type="button" value="Add">
+			<input type="submit" value="Update" />
+	</form>
+  </body>
+
+</html>
