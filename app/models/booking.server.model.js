@@ -62,6 +62,13 @@ BookingSchema.virtual('backgroundColor').get(function() {
 	return this._resources.className;
 });
 
+BookingSchema.virtual('yearMonth').get(function() {
+	return this.start.getUTCFullYear() + "" + this.start.getUTCMonth()
+});
+BookingSchema.virtual('prettyYearMonth').get(function() {
+	return ["Jan", "Feb", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][this.start.getUTCMonth()] +" "+ this.start.getUTCFullYear()
+});
+
 BookingSchema.set('toObject', { getters: true, virtuals: true});
 BookingSchema.set('toJSON', { getters: true, virtuals: true});
 mongoose.model('Booking', BookingSchema);

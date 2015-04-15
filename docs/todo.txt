@@ -8,20 +8,22 @@ Disable sign up form - based on config variable
 #===Front end=================
 +Finances display
 -----------------
+Create a booking.model method to return sum of charges
+Create a booking model virtual to return the month/year
+
 Create a screen to display finances, with breakdowns
 	Features:
 		Display all bookings
 		Display sums of booking by category
 
-	E.g. Show bookings by month, with a monthly sum
+	Show bookings by month
 	Show bookings by year
 	Include provisional bookings
 	Start date + end date filter
 	Show past, show pending
 	Export to CVS
-
-		Show provisional: [x]
-		Show fees breakdown: [x]
+	Show provisional: [x]
+	Show fees breakdown: [x]
 		
 		
 		Client		Booking Date/Room	Fees			Provisional Total			Confirmed Total		Total
@@ -35,7 +37,7 @@ Create a screen to display finances, with breakdowns
 										10.00 Other: Cocktail Bar
 	
 
-+Header Bar
+DONE: +Header Bar
 -----------
 Add jquery menu
 Center styles properly
