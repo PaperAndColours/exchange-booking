@@ -3,17 +3,20 @@
 <head>
   <meta charset='utf-8'/>
   <link href="/js/bower_components/DataTables/media/css/jquery.dataTables.min.css" rel='stylesheet'/>
+  <link href="/js/bower_components/datatables-tabletools/css/dataTables.tableTools.css" rel='stylesheet'/>
   <link href='/css/headerStyle.css' rel='stylesheet'/> 
   <link href='/css/overviewStyle.css' rel='stylesheet'/> 
 
   <script src='/js/bower_components/jquery/dist/jquery.js'></script>
   <script src="/js/bower_components/DataTables/media/js/jquery.dataTables.js"></script>
+  <script src="/js/bower_components/datatables-tabletools/js/dataTables.tableTools.js"></script>
   <script src='/js/bower_components/moment/moment.js'></script>
   <script src="/js/header.js"></script>
   <script src="/js/overview.js"></script>
 </head>
 <body>
 <% include header.ejs %>
+	<div id="clearRow"> </div>
 	<table id="Bookings">
 		<thead>
 			<th> yearMonth </th>
