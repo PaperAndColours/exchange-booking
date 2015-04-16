@@ -20,6 +20,5 @@
     "fullcalendar": "https://github.com/ikelin/fullcalendar.git#~1.5.2",
     "jquery-ui": "~1.11.4",
     "moment": "~2.10.2",
-    "datatables-tabletools": "~2.2.4"
   }
 }

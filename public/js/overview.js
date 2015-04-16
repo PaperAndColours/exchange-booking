@@ -4,10 +4,6 @@ $(document).ready(function() {
 		$(this).text(momDate.format("DD MMMM YY (hh:mm)"));
 	});
 	var t = $('#Bookings').DataTable({
-		dom: 'T<"clear">lfrtip',
-		tableTools: {
-			"sSwfPath": "/js/bower_components/datatables-tabletools/swf/copy_csv_xls_pdf.swf"
-		},
 		"ajax": {
 			"url":"/calendar/booking",
 			"dataSrc": function(json) {
