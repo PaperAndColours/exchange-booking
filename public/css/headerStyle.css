@@ -3,7 +3,6 @@ padding: 0;
 margin: 0;
 }
 #header {
-
 background: #E10707;
 font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -12,25 +11,28 @@ font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 background: #E10707;
 height: 50px;
 margin: auto;
+padding: 0;
 width: 980px;
 }
 #left_header {
+margin: 0; padding: 0;
 float: left;
 font-size: 20pt;
 line-height: 50px;
 text-align: center;
-width: 670px;
+width: 470px;
 }
 #header img { width: 81px;
-padding-left: 35px;
+margin: 0;
 float: left;
+padding: 0;
 height: 50px;
 }
 
 #header h1 {
 color: white;
 font-size: 14pt;
-padding: 0 0 0 250px;
+padding: 0 0 0 50px;
 margin: 0;
 }
 
