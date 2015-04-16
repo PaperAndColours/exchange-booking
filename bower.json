@@ -19,6 +19,6 @@
     "timepicker": "~1.6.10",
     "fullcalendar": "https://github.com/ikelin/fullcalendar.git#~1.5.2",
     "jquery-ui": "~1.11.4",
-    "moment": "~2.10.2",
+    "moment": "~2.10.2"
   }
 }
