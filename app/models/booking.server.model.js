@@ -6,7 +6,7 @@ Currency = mongoose.Types.Currency;
 
 var ChargeSchema = new Schema({
 	rawAmount: {type: Currency,	min: 0},
-    chargeType: {type: String, enum: ['booking', 'catering', 'refreshments', 'other'], required: true},
+    chargeType: {type: String, enum: ['booking', 'catering', 'refreshments', 'equipment required', 'use of kitchen', 'other'], required: true},
     otherDesc: {type: String}
 });
 
