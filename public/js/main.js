@@ -76,6 +76,8 @@ $(document).ready(function () {
           center: 'title',
           right: 'month,agendaWeek,resourceDay'
         },
+		minTime: "08:00:00",
+		allDaySlot: false,
         defaultView: 'resourceDay',
         editable: true,
         droppable: true,
@@ -88,7 +90,6 @@ $(document).ready(function () {
         selectHelper: true,
 		select: function(start, end, ev) { //start, end, resources
 				viewName = $('#calendar').fullCalendar('getView').name;
-				console.log(viewName);
 				if (viewName == "resourceDay") {
 					eventData = {"start": start, "end": end, "resources": ev.data.id};
 					createSaveDialog(eventData);
@@ -137,6 +138,7 @@ $(document).ready(function () {
 //----------Form creation and initialization----------------------
 	var dialog, form,
 		client = $("#client"),
+		invoiceDetails = $("#invoiceDetails"),
 		resources = $("#resources"),
 		provisional = $("#provisional"),
 		startdate = $("#startdate"),
@@ -145,7 +147,7 @@ $(document).ready(function () {
 		endtime = $("#endtime"),
 		eventID = $("#eventID"),
 		description = $("#description"),
-		allFields = $([]).add(client).add(resources).add(provisional).add(startdate).add(enddate).add(starttime).add(endtime).add(description),
+		allFields = $([]).add(client).add(invoiceDetails).add(resources).add(provisional).add(startdate).add(enddate).add(starttime).add(endtime).add(description),
 		tips = $(".validateTips");
 
 	startdate.datepicker({
@@ -179,18 +181,18 @@ $(document).ready(function () {
 
 	function createStartTime() {
      starttime.timepicker({
-		minTime:"7:00am",
+		minTime:"8:00am",
 		maxTime:"9:00pm"
 		});
 	}
 	function createEndTime() {
      endtime.timepicker({
-		minTime:"7:00am",
+		minTime:"8:00am",
 		maxTime:"9:00pm"
 		});
 	}
 	function removeEndRange() {
-		endtime.timepicker('option', 'minTime', "7:00am");
+		endtime.timepicker('option', 'minTime', "8:00am");
 		endtime.timepicker('option', 'showDuration', false);
 	}
 
@@ -319,6 +321,7 @@ $(document).ready(function () {
 		event.start = bookingInfo.start;
 		event.end = bookingInfo.end;
 		event.client = client.val();
+		event.invoiceDetails = invoiceDetails.val();
 		event.provisional = provisional.prop("checked");
 		event._resources = resources.val();
 		event.description = description.val();
@@ -402,6 +405,10 @@ $(document).ready(function () {
 			updateEndRange(); //makes the end time selector show time if relevant
 			if (data.client != undefined)
 				client.val(data.client);
+			if (data.invoiceDetails != undefined)
+				invoiceDetails.val(data.invoiceDetails);
+			else
+				invoiceDetails.val("");
 			if (data.resources != undefined)
 				resources.val(data.resources);
 			if (data.description != undefined)

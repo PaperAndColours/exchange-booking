@@ -26,10 +26,11 @@ mongoose.model('Charge', ChargeSchema);
 
 var BookingSchema = new Schema({
 	client: {type: String, required: true},
+	invoiceDetails: {type: String, required: false, default: ""},
 	start: {type: Date, required: true},
 	end: {type: Date, required: true},
 	provisional: {type: Boolean, required: true},
-	description: {type: String, required: false },
+	description: {type: String, required: false, default: ""},
 	_resources: { 
 		type: Schema.Types.ObjectId,
 		ref: 'Room',
@@ -48,7 +49,7 @@ BookingSchema.pre('validate', function(next) {
 });
 
 BookingSchema.virtual('title').get(function() {
-	return this.client;
+	return this.client + " - " + this._resources.name;
 });
 
 BookingSchema.virtual('resources').get(function() {

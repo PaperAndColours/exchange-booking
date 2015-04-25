@@ -25,12 +25,14 @@
 <% include header.ejs %>
 <div id='calendar'></div>
 
-    <div id="dialog-form" title="Create new user">
-        <p class="validateTips">All form fields are required.</p>
+    <div id="dialog-form" title="Booking Details">
+        <p class="validateTips"></p>
         <form>
             <fieldset>
                 <label for="client">Client</label>
                 <input type="text" name="client" id="client" value="" class="text ui-widget-content ui-corner-all">
+                <label for="invoiceDetails">Client Invoicing Details</label>
+				<textarea id="invoiceDetails" cols="40" rows="20" class="ui-widget-content ui-corner-all"></textarea>
 
 				<label for="provisional" class="ownRow"> Provisional Booking? </label>
 				<input type="checkbox" id="provisional" class="ownRow">

@@ -1,3 +1,22 @@
+New Changes
+===========
+Add client invoice details field
+	html
+	Update form		x
+
+	Javascript
+		Create variable for element
+		form population/clearing: createDialog()
+		Add element to complete jquery list
+		Attach validator if neccesary
+		Update model submission: addCustomEventInfo()
+
+	Update model
+		Add default for backwards compatibility
+	Update CVS rows
+
+
+
 #===Front end=================
 Connection lost - Don't delete events from screen
 -------------------------------------------------

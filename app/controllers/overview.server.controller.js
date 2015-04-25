@@ -15,14 +15,14 @@ exports.render = function(req,res, next) {
 };
 
 generateCVSheaders = function() {
-	headers = "Client\tStart Date\tStart Time\tEnd Date\tEnd Time\tRoom\tDescription\tProvisional\tCharges\t\n"
+	headers = "Client\tInvoice Details\tStart Date\tStart Time\tEnd Date\tEnd Time\tRoom\tDescription\tProvisional\tCharges\t\n"
 	console.log(headers);
 	return headers
 }
 generateCVSbooking = function(booking, chargeSum) {
 	row = "";
 	row += booking.client + "\t";
-
+	row += booking.invoiceDetails.replace("\n"," ") + "\t";
 	row += booking.start.getDate() + "/" + booking.start.getMonth() + "/" + booking.start.getUTCFullYear() + "\t";
 	startMins = booking.start.getMinutes() == 0 ? "00" : booking.start.getMinutes()
 	row += booking.start.getHours() + ":" + startMins+ "\t";
