@@ -37,10 +37,10 @@ generateCVSbooking = function(booking, charges) {
 	row = "";
 	row += booking.client + "\t";
 	row += booking.invoiceDetails.replace("\n"," ") + "\t";
-	row += booking.start.getDate() + "/" + booking.start.getMonth() + "/" + booking.start.getUTCFullYear() + "\t";
+	row += booking.start.getDate() + "/" + (booking.start.getMonth()+1) + "/" + booking.start.getUTCFullYear() + "\t";
 	startMins = booking.start.getMinutes() == 0 ? "00" : booking.start.getMinutes()
 	row += booking.start.getHours() + ":" + startMins+ "\t";
-	row += booking.end.getDate() + "/" + booking.end.getMonth() + "/" + booking.end.getUTCFullYear() + "\t";
+	row += booking.end.getDate() + "/" + (booking.end.getMonth()+1) + "/" + booking.end.getUTCFullYear() + "\t";
 	endMins = booking.end.getMinutes() == 0 ? "00" : booking.end.getMinutes()
 	row += booking.end.getHours() + ":" + endMins+ "\t";
 
@@ -80,7 +80,7 @@ generateCVScharges = function(charges, chargeTypes) {
 		if (a === undefined) 
 			return "";
 		else 
-			return "£"+parseFloat(a).toFixed(2);
+			return parseFloat(a).toFixed(2);
 	});
 	row = chargeList.join("\t");
 	return row;
