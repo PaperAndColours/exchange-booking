@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link href='/css/headerStyle.css' rel='stylesheet'/> 
+  <script src='/js/bower_components/jquery/dist/jquery.js'></script>
+    <title>
+        <%=title %>
+    </title>
+<script>
+	$(document).ready(function() {
+	});
+</script>
+
+</head>
+<body>
+	<%include header%>
+		<h1> Rooms </h1>
+		<% months=["January", "February", "March"< "April", "May", "June", "July", "August", "September", "October", "November", "December"]  %>
+		<% years = [2015, 2016, 2017, 2018]  %>
+	<form action="/calendar/overview/custom" method="post">
+		<div class="roomRow">
+			<label> Report Range </Label>
+			<select name="reportRange" id="reportRange">
+					<option value="all"> All Bookings </option>
+					<option value="annually"> Select by Year </option>
+					<option value="monthly"> Select by Month </option>
+			</select>
+			<select name="startmonth" id="startmonth">
+					<% for (month in months) { %>
+					<option value="<%=months[month]%>"> <%=months[month]%> </option>
+					<% } %>
+			</select>
+			<select name="startyear" id="startyear">
+					<% for (year in years) { %>
+					<option value="<%=years[year]%>"> <%=years[year]%> </option>
+					<% } %>
+			</select>
+			<input type="submit" value="Download" />
+	</form>
+  </body>
+
+</html>

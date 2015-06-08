@@ -14,6 +14,13 @@ exports.render = function(req,res, next) {
 	});
 };
 
+exports.renderCustom = function(req,res, next) {
+			res.render('CVSoptions', {
+				title: "Moseley Exchange Room Hire System",
+				userFullName: req.user ? req.user.fullName : ''
+			});
+};
+
 getChargeTypes = function(bookings) {
 	chargeTypes = []
 	for (var i=0; i<bookings.length; i++) {
@@ -86,6 +93,9 @@ generateCVScharges = function(charges, chargeTypes) {
 	return row;
 }
 exports.csv = function(req,res, next) {
+	if (req.body !== undefined) 
+		console.log("Form submission")
+
 	Booking.find({}).populate('_resources').exec(function(err, bookings) {
 		if (err) {
 			return next(err);

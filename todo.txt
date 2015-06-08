@@ -4,24 +4,35 @@ New Changes 2/5/2015
 DONE: Fix dates - all 1 month behind
 DONE: Delete price symbol on CVS
 Make generation of spreadsheets per month/year
-	Create a page with a selection form
-		Copy HTML & CSS from preferences page
-		Write form
+	View
+		DONE:Copy HTML & CSS from preferences page
+		DONE:Write form
+		Create JS for date/month/year picker
 		Create JS to show relevant parts of form
+
+		Create more intelligent way of selecting month/year
+
 	Controller
-		Create controller function to render the form
+		DONE: Create controller function to render the form
 		Change download controller function to POST & accept details such as:
 			YEARLY/MONTHLY
 			Start month / end month
 			Start year / end year
+		DONE:Find out how to create a query object to pass to the query. Could just use json?
+			((ANSWER: If you don't pass a callback to the find, a query object is returned which can be executed later. In fact, that is already happening in some of my code. So, could build up a query depending on relevant results, and then populate the selected one, and exec))
 		Modify function to make query based on start/end time
 	
-	Set up routing
-		Add route for cvs options page
-		Add route for cvs options submission vvv
-		Change cvs download request to POST
+		TEST: Added form submission code to overview.controller.js.cvs
 
-Create online backup
+	Routing
+		DONE: Add route for cvs options page
+		DONE: Add route for cvs options submission vvv
+		Tidy up extranious/obsolete routes
+	
+	Add link to relevant page
+
+
+Create online backup DONE
 Figure out backup options
 
 Find / collate passwords & usernames for various things

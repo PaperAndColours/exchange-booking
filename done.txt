@@ -1,3 +1,11 @@
+DONE:+Finances display
+-----------------
+Create a screen to display finances, with breakdowns
+
+DONE: +Create front page with login form and proper redirection
+---------------------------------------------------------
+So user can log in, and then go to calendar
+
 DONE: +Validation (Back end)
 ----------
 Add validation for user submitted values
