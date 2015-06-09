@@ -43,16 +43,20 @@ generateCVSheaders = function(charges) {
 generateCVSbooking = function(booking, charges) {
 	row = "";
 	row += booking.client + "\t";
-	row += booking.invoiceDetails.replace("\n"," ") + "\t";
+	invoiceDetails = booking.invoiceDetails.replace(/\n|\r/g," ");
+	invoiceDetails = (invoiceDetails.length > 0 ? invoiceDetails : " ") + "\t";
+	row += invoiceDetails;
 	row += booking.start.getDate() + "/" + (booking.start.getMonth()+1) + "/" + booking.start.getUTCFullYear() + "\t";
 	startMins = booking.start.getMinutes() == 0 ? "00" : booking.start.getMinutes()
-	row += booking.start.getHours() + ":" + startMins+ "\t";
+	row += booking.start.getUTCHours() + ":" + startMins+ "\t";
 	row += booking.end.getDate() + "/" + (booking.end.getMonth()+1) + "/" + booking.end.getUTCFullYear() + "\t";
 	endMins = booking.end.getMinutes() == 0 ? "00" : booking.end.getMinutes()
-	row += booking.end.getHours() + ":" + endMins+ "\t";
+	row += booking.end.getUTCHours() + ":" + endMins+ "\t";
 
 	row += booking._resources.name+ "\t";
-	row += booking.description.replace("\n"," ") + "\t";
+	description = booking.description.replace(/\n|\r/g," ");
+	description = (description.length > 0 ? description : " ") + "\t";
+	row += description;
 	row += booking.provisional+ "\t";
 	row += charges;
 	return row;
@@ -96,7 +100,7 @@ exports.csv = function(req,res, next) {
 	if (req.body !== undefined) 
 		console.log("Form submission")
 
-	Booking.find({}).populate('_resources').exec(function(err, bookings) {
+	Booking.find({}).sort([['start', 'ascending']]).populate('_resources').exec(function(err, bookings) {
 		if (err) {
 			return next(err);
 		}
@@ -108,7 +112,7 @@ exports.csv = function(req,res, next) {
 				body += generateCVSbooking(bookings[i], charges)
 				body += "\n";
 			}
-			res.attachment("report.csv")
+			res.attachment("report.csv");
 			res.send(body);
 		}
 	});

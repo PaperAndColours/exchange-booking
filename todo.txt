@@ -1,6 +1,13 @@
 New Changes 2/5/2015
 ====================
 
+Post phone call:
+	DONE: Correct BST date on CSV
+	DONE: Made sure time is correct
+	DONE: Added spaces to columns, so no wierd wrapping effects
+	DONE: Updates removal of new lines, so all entries appear to transfer
+	DONE: Added auto date sort
+
 DONE: Fix dates - all 1 month behind
 DONE: Delete price symbol on CVS
 Make generation of spreadsheets per month/year
